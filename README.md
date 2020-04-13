@@ -6,4 +6,4 @@ JUKEBOX ist ein Browsergame. Getestet für Firefox, Chrome, Opera und INTERNET E
 Upload/Installation 13.4.2020
 Version: 0.90, stabile Beta-Version
 
-JUKEBOX ist als Freeware konzipiert. Bei gewerblicher Nutzung können urheberrechtliche Probleme entstehen (wg der Platten-Cover), Rechte der Firmen
+JUKEBOX ist als Freeware konzipiert. Bei gewerblicher Nutzung können urheberrechtliche Probleme entstehen (wg der Platten-Cover), Rechte der Schallplatten-Firmen
