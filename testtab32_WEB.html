@@ -51,6 +51,8 @@
 <!--           Spieloption LEVEL: wenn der Computer ein STARS-on-45 COVER erspielt wird das Ergebnisfeld blau gefärbt (Signal) 
 <!-- Vs. 1.51  CoverAuswahl: autom. Erkennung des localhost und FIREFOX Browser            
 <!--
+<!-- Vs. 1.60  CoverAuswahl: 5 komplett individuelle COVER-Saetze            
+<!--
 <!-- folgende Definition bezieht sich auf TAG h1
 <!--    sieht redundant/widersprüchlich aus; aber sonst keine große H1 Überschrift im IE möglich
 <!--    noch optimieren: Farben / Rahmen von H2, ... aber sensibel; Tabellenaufbau schnell zerstört; IMG wichtig
@@ -71,7 +73,7 @@ font-size:10pt; /* Größe 10pt */
 </section>
 <div id="rand">
 <h1 id="kopf"><img>JUKEBOX = Let the good times roll</h1>
-<h2 id="pos"><img style="border: 0px solid ; width: 100%; height: 40px;" src="" alt="..... von Hans Jeske Vs.1.51 Anlegen nur waagerecht/senkrecht passend - ausser 'Scan&Play JOKER'  [ Klick, kein Drag&amp;Drop ]"></h2>
+<h2 id="pos"><img style="border: 0px solid ; width: 100%; height: 40px;" src="" alt="..... von Hans Jeske Vs.1.60 Anlegen nur waagerecht/senkrecht passend - ausser 'Scan&Play JOKER'  [ Klick, kein Drag&amp;Drop ]"></h2>
 </div>
 <div style="width: 40%;">
 <table align="left" border="5" cellpadding="0" cellspacing="3" width="75">
@@ -266,6 +268,7 @@ for (var row = 1; row <= 7; row++) {
 // ----Grafiken nur einmal von der Harddisk laden -------------------------------
 
 // Cookie auslesen (gesetzt in CoverAuswahl - neues HTML Formular)
+b=1; // Default  falls kein aktives Cookie
 if(document.cookie){ 
    var a; var b;
    a = document.cookie;
@@ -274,20 +277,32 @@ if(document.cookie){
    // alert(b);
 }
    
-if (b==2) {
-   img_Tamla_Y = "img/Tamla_Y_akt.png";
-   img_Rock_Y = "img/Rock_Y_akt.png";
-   img_Pop_Y = "img/Pop_Y_akt.png";
-   img_Beat_Y = "img/Beat_Y_akt.png";
-   img_Tamla_G = "img/Tamla_G_akt.png";
-   img_Rock_G = "img/Rock_G_akt.png";
-   img_Pop_G = "img/Pop_G_akt.png";
-   img_Beat_G = "img/Beat_G_akt.png";
-   img_Spiel = "img/Spiel_JO_akt.png";
-   img_Spiel_SP = "img/Spiel_SP_akt.png";
-   img_Stars45 = "img/Stars45_akt.png";
+if (b==1) {
+   img_Tamla_Y = "img/Tamla_Y.png";
+   img_Rock_Y = "img/Rock_Y.png";
+   img_Pop_Y = "img/Pop_Y.png";
+   img_Beat_Y = "img/Beat_Y.png";
+   img_Tamla_G = "img/Tamla_G.png";
+   img_Rock_G = "img/Rock_G.png";
+   img_Pop_G = "img/Pop_G.png";
+   img_Beat_G = "img/Beat_G.png";
+   img_Spiel = "img/Spiel_JO.png";
+   img_Spiel_SP = "img/Spiel_SP.png";
+   img_Stars45 = "img/Stars45.png";
    }
-      
+ if (b==2) {
+   img_Tamla_Y = "img/Punk_Y.png";
+   img_Rock_Y = "img/RockU2_Y.png";
+   img_Pop_Y = "img/DancePop_Y.png";
+   img_Beat_Y = "img/NewWave_Y.png";
+   img_Tamla_G = "img/Punk_G.png";
+   img_Rock_G = "img/RockU2_G.png";
+   img_Pop_G = "img/DancePop_G.png";
+   img_Beat_G = "img/NewWave_G.png";
+   img_Spiel = "img/Spiel_JO.png";
+   img_Spiel_SP = "img/Spiel_SP.png";
+   img_Stars45 = "img/Stars45.png";
+   }     
 if (b==3) {
    img_Tamla_Y = "img/HipHop_Y.png";
    img_Rock_Y = "img/Rap_Y.png";
@@ -297,27 +312,39 @@ if (b==3) {
    img_Rock_G = "img/Rap_G.png";
    img_Pop_G = "img/Singer_G.png";
    img_Beat_G = "img/Metall_G.png";
-   img_Spiel = "img/Spiel_JO_akt.png";
-   img_Spiel_SP = "img/Spiel_SP_akt.png";
-   img_Stars45 = "img/Stars45_akt.png";
+   img_Spiel = "img/Spiel_JO.png";
+   img_Spiel_SP = "img/Spiel_SP.png";
+   img_Stars45 = "img/Stars45.png";
    }
    
 if (b==4) {   
-   img_Tamla_Y = "img/HipHop_old_Y.png";
-   img_Rock_Y = "img/Rap_old_Y.png";
-   img_Pop_Y = "img/Singer_old_Y.png";
-   img_Beat_Y = "img/Metall_old_Y.png";
-   img_Tamla_G = "img/HipHop_old_G.png";
-   img_Rock_G = "img/Rap_old_G.png";
-   img_Pop_G = "img/Singer_old_G.png";
-   img_Beat_G = "img/Metall_old_G.png";
-   img_Spiel = "img/Spiel_JO_akt.png";
-   img_Spiel_SP = "img/Spiel_SP_akt.png";
-   img_Stars45 = "img/Stars45_akt.png";
+   img_Tamla_Y = "img/HardRock70_Y.png";
+   img_Rock_Y = "img/GlamRock_Y.png";
+   img_Pop_Y = "img/Disco_Y.png";
+   img_Beat_Y = "img/Philly_Y.png";
+   img_Tamla_G = "img/HardRock70_G.png";
+   img_Rock_G = "img/GlamRock_G.png";
+   img_Pop_G = "img/Disco_G.png";
+   img_Beat_G = "img/Philly_G.png";
+   img_Spiel = "img/Spiel_JO.png";
+   img_Spiel_SP = "img/Spiel_SP.png";
+   img_Stars45 = "img/Stars45.png";
    }
-  
-// Auswahl 1 und undefiniert führt zum gleichen Ergebnis  
-if ((b!=2) && (b!=3) && (b!=4)) {
+if (b==5) {   
+   img_Tamla_Y = "img/NDW_Y.png";
+   img_Rock_Y = "img/HardRock_Y.png";
+   img_Pop_Y = "img/PopMW_Y.png";
+   img_Beat_Y = "img/Funk_Y.png";
+   img_Tamla_G = "img/NDW_G.png";
+   img_Rock_G = "img/HardRock_G.png";
+   img_Pop_G = "img/PopMW_G.png";
+   img_Beat_G = "img/Funk_G.png";
+   img_Spiel = "img/Spiel_JO.png";
+   img_Spiel_SP = "img/Spiel_SP.png";
+   img_Stars45 = "img/Stars45.png";
+   }  
+// Auswahl <> 1-5 und undefiniert führt zum gleichen Ergebnis  
+if ((b<1) || (b>5)) {
    img_Tamla_Y = "img/Tamla_Y.png";
    img_Rock_Y = "img/Rock_Y.png";
    img_Pop_Y = "img/Pop_Y.png";
@@ -3107,6 +3134,7 @@ function CoverAuswahl()
       var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "  width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes"); 
       // Hilfe immer in den Vordergrund
       CoverFenster.focus();
+      location.reload();
       return;
    }
     
@@ -3116,6 +3144,7 @@ function CoverAuswahl()
        var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "  width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");
        // Hilfe immer in den Vordergrund
        CoverFenster.focus();
+       location.reload();
        return;
    }      
    
@@ -3128,6 +3157,7 @@ function CoverAuswahl()
           var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
           // Hilfe immer in den Vordergrund
           CoverFenster.focus(); 
+          location.reload();
           return
        }
     }           
@@ -3139,6 +3169,7 @@ function CoverAuswahl()
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Hilfe immer in den Vordergrund
        CoverFenster.focus();
+       location.reload();
        return;        
        }
 }
