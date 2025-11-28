@@ -72,16 +72,16 @@ in linke BOX vor COVER-Reihe klicken</h4>
       <div id="86"><a href="javascript:gamecontrol(86)"><img style="border: 0px solid ; width: 75px; height: 75px;" src="img/Jukebox_Auswahl.png" alt=""></a></div>
       </td>
       <td>
-      <div id="87"><a href="javascript:gamecontrol(87)"><img src="img/GlamRock_G.png" alt="" border="0" height="75" width="75"></a></div>
+      <div id="87"><a href="javascript:gamecontrol(87)"><img src="img/RockOla_G.png" alt="" border="0" height="75" width="75"></a></div>
       </td>
       <td>
-      <div id="88"><a href="javascript:gamecontrol(88)"><img src="img/Disco_G.png" alt="" border="0" height="75" width="75"></a></div>
+      <div id="88"><a href="javascript:gamecontrol(88)"><img src="img/Seeburg_G.png" alt="" border="0" height="75" width="75"></a></div>
       </td>
       <td>
-      <div id="89"><a href="javascript:gamecontrol(89)"><img src="img/HardRock70_G.png" alt="" border="0" height="75" width="75"></a></div>
+      <div id="89"><a href="javascript:gamecontrol(89)"><img src="img/Wurlitzer_G.png" alt="" border="0" height="75" width="75"></a></div>
       </td>
       <td>
-      <div id="90"><a href="javascript:gamecontrol(90)"><img src="img/Philly_G.png" alt="" border="0" height="75" width="75"></a></div>
+      <div id="90"><a href="javascript:gamecontrol(90)"><img src="img/AMI_G.png" alt="" border="0" height="75" width="75"></a></div>
       </td>
     </tr>
     <tr>
@@ -105,11 +105,56 @@ in linke BOX vor COVER-Reihe klicken</h4>
 </table>
 </div>
 <script>
- 
+
+// alert("vor Cookie ...");
 // wird auf NULL gesetzt; wenn Fenster über BUTTON geschlossen wird ist immer eine Auswahl
 // getroffen
  
 var y; y=0;
+var a;
+var b;
+var c; 
+var d;
+laenge=0;
+
+var ctrue=false;
+var dtrue=false;
+
+// 3 F�lle: kein Cookie, Cookie vorhanden aber defekt bzw OK
+
+//  a.   kein Cookie angekommen
+//       zB Spielbeginn und dann direkt Cover-Auswahl
+if (!document.cookie){
+//alert("kein Cookie angekommen in Coverauswahl");
+};
+
+if(document.cookie){
+   //alert("Cookie angekommen ... Pr�fung");
+   a=document.cookie; 
+   //alert(a);
+   laenge = a.length;   
+   if (laenge > 11) {
+      b = a.substr(9,1);
+      c = a.substr(10,1);   
+      d = a.substr(11,1);
+      //alert(b + c + d);
+      if (istNumerischRobust(c)) {ctrue = true;};
+      if (istNumerischRobust(d)) {dtrue = true;}; 
+//    b. korrektes Cookie angekommen     
+//       im TRUE Fall beim Schreiben kein Default notwendig 
+      //alert("Plausi c & d robust ?" + ctrue + dtrue);
+                    } else {
+//    c. defektes/ung�ltiges Cookie angekommen (theor. m�glich)
+      //alert("Defektes Cookie angekommen in Coverauswahl");
+      ctrue = false;
+      dtrue = false;
+};  
+};
+ 
+
+function istNumerischRobust(str) {
+  return str !== '' && !isNaN(Number(str));
+}
 
 function gamecontrol(y)
 {
@@ -120,16 +165,19 @@ function gamecontrol(y)
    if (y==91) y=5;
    if ((y==0) || (y>5)) { alert("Ungueltige Auswahl"); }
    // alert(y);
-
+ 
    var ablauf = new Date();
    var infuenfTagen = ablauf.getTime() + (5 * 24 * 60 * 60 * 1000);
    ablauf.setTime(infuenfTagen);
-   document.cookie = "CoverTyp=" + y + "; expires=" + ablauf.toGMTString(); 
-   // alert(document.cookie);  
-   if ((y>=1) && (y<=5)) { window.close() }; // gültige Auswahl
+   
+   if (ctrue==false) {c="0"};
+   if (dtrue==false) {d="0"};
+   //alert("c und d vor dem Cookie-Schreiben .." + c + d);
+   
+   document.cookie = "CoverTyp=" + y + c + d + "; expires=" + ablauf.toGMTString(); 
+   //alert(document.cookie);  
+   if ((y>=1) && (y<=5)) { window.close() }; // gueltige Auswahl
 }
-
-
 </script>
 </span>
 </body></html>
