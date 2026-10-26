@@ -3351,20 +3351,20 @@ function CoverAuswahl()
     // Alle anderen Browser CoverAuswahl via WEB (Github - MUSS) - dann muss aber das Spiel auch via Link auf dem Host gestartet werden 
     // sonst passiert einfach nichts
     if (urlheader=="https:") {
-       alert("Vor Auswahl"); 
+      // alert("Vor Auswahl"); 
       var CoverFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_CoverAuswahl.html",
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Hilfe immer in den Vordergrund      
        CoverFenster.focus();
-       alert("Nach Auswahl");      
+       // alert("Nach Auswahl");      
        const btn = document.getElementById("reloadButton");  
        btn.addEventListener("click", () => {
            window.location.reload();
         }); 
-       // Nach 3 Sekunden (3000ms) den Klick automatisch auslösen
+       // Nach 5 Sekunden (5000ms) den Klick automatisch auslösen
        setTimeout(() => {
        btn.click(); 
-       }, 3000);
+       }, 5000);
        return;        
        }
 }
