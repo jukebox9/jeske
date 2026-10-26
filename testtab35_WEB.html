@@ -12,76 +12,76 @@
   
   <style>
 
-<!-- Vs. 0.13: 4.2.2019 sauberes Spielfeld; Spieler zieht OK, Überschriften OK für alle Browser ; noch keine
-<!--           Computerzüge; keine Logikprüfung auf Spieler
+<!-- Vs. 0.13: 4.2.2019 sauberes Spielfeld; Spieler zieht OK, Ãœberschriften OK fÃ¼r alle Browser ; noch keine
+<!--           ComputerzÃ¼ge; keine LogikprÃ¼fung auf Spieler
 <!-- Vs. 0.14: erste simple Computerlogik freie/belegbare Felder
 <!-- Vs. 0.15: Computercheck auf Legbarkeit von Covern (eingeschr. nur auf Zeile 1)
-<!-- Vs. 0.16: 8.2.2019 Computer zieht und Vorrat füllt sich richtig auf; noch keinerlei Logik,
-<!--           auch keine Plausiprüngen. Ausnahme: Computer setzt nur auf zulässige Felder, aber COVER-Typ
-<!--           wird nicht gegengeprüft - Spieler kann auch (noch) frei platzieren
-<!-- Vs. 0.50  10.2.2019 spielbare Vs ohne Bug; Computer zieht auf freie, zulässige Felder, beachtet Regeln
+<!-- Vs. 0.16: 8.2.2019 Computer zieht und Vorrat fÃ¼llt sich richtig auf; noch keinerlei Logik,
+<!--           auch keine PlausiprÃ¼ngen. Ausnahme: Computer setzt nur auf zulÃ¤ssige Felder, aber COVER-Typ
+<!--           wird nicht gegengeprÃ¼ft - Spieler kann auch (noch) frei platzieren
+<!-- Vs. 0.50  10.2.2019 spielbare Vs ohne Bug; Computer zieht auf freie, zulÃ¤ssige Felder, beachtet Regeln
 <!--           Feldauswahl rein nach dem Zufallsprinzip - Spielerverhalten wie gehabt
-<!-- Vs. 0.51: 12.2.2019 Bugfixing ; YesNoTab Init., Cover Computer nachziehen wenn keine Anlegemöglichkeit
+<!-- Vs. 0.51: 12.2.2019 Bugfixing ; YesNoTab Init., Cover Computer nachziehen wenn keine AnlegemÃ¶glichkeit
 <!--           Routine zur Ermittlung des Siegers; wertet Diagonalen aus
 <!-- Vs. 0.52  mit Link-Buttons Neues Spiel, Joker ziehen etc; COVER des Computers zT verdeckt (unfertig)
 <!-- Vs. 0.60  auch Spieler beachtet Regeln; Bugfixing; Computer zieht Joker nach - Verdecktes Spiel geht
 <!-- Vs. 0.70  3.3.2019 erstmals Computer mit Strategie; Option: 3 Cover oder 3 Cover + 1 Joker
-<!--           StarsOn45 Startpos. variiert; Jokerverhältnis geändert: 10 ScanPlay, 6 normale
+<!--           StarsOn45 Startpos. variiert; JokerverhÃ¤ltnis geÃ¤ndert: 10 ScanPlay, 6 normale
 <!-- Vs. 0.71  Endanzeige Gewonnen/Verloren; anlegeopti(): Randfelder Mitte bewertet
-<!-- Vs. 0.72  Läuft nicht auf ANDROID Tablet: HTML rel.Pfad IMG-Ornder geändert; +alle Images jetzt nur einmal laden
-<!--           Prüfung auf Spielende: jetzt auch nach dem Computerzug
-<!-- Vs. 0.73  Joker Funktion Scan&Play für Spieler implementiert; Computer: Jokersperre aus Diagonalen (Spielbeginn)
-<!--           Spielbeginn jetzt variabel: Computer oder Spieler; Texte/Fkt.-Tasten: zentriert und verkürzt;
-<!--           [zu lange Texte führten auf Tablets zu Problemen in der Tabellendarstellung - partiell grössere Spalten]
-<!-- Vs. 0.80  Computerzug: Meldung über Aussetzen; Computer-Routine optim.: Setzen nach Zufall (beschleunigt)
-<!--           Endeerkennung vervollständigt
-<!-- Vs. 0.81  Computerzug: Strategieoptimierung lange Diagonalen auf verloren/gewonnen prüfen; JOKER setzen reduziert
-<!-- Vs. 0.82  Optimierungen: Bewertungssystem geändert der Felder in YesNoPref; jetzt 1-8; COVER hochwertiger als JOKER
+<!-- Vs. 0.72  LÃ¤uft nicht auf ANDROID Tablet: HTML rel.Pfad IMG-Ornder geÃ¤ndert; +alle Images jetzt nur einmal laden
+<!--           PrÃ¼fung auf Spielende: jetzt auch nach dem Computerzug
+<!-- Vs. 0.73  Joker Funktion Scan&Play fÃ¼r Spieler implementiert; Computer: Jokersperre aus Diagonalen (Spielbeginn)
+<!--           Spielbeginn jetzt variabel: Computer oder Spieler; Texte/Fkt.-Tasten: zentriert und verkÃ¼rzt;
+<!--           [zu lange Texte fÃ¼hrten auf Tablets zu Problemen in der Tabellendarstellung - partiell grÃ¶ssere Spalten]
+<!-- Vs. 0.80  Computerzug: Meldung Ã¼ber Aussetzen; Computer-Routine optim.: Setzen nach Zufall (beschleunigt)
+<!--           Endeerkennung vervollstÃ¤ndigt
+<!-- Vs. 0.81  Computerzug: Strategieoptimierung lange Diagonalen auf verloren/gewonnen prÃ¼fen; JOKER setzen reduziert
+<!-- Vs. 0.82  Optimierungen: Bewertungssystem geÃ¤ndert der Felder in YesNoPref; jetzt 1-8; COVER hochwertiger als JOKER
 <!--           reine JOKER Felder in YesNoTab als "J" gekennzeichnet
-<!--           JOKER im Spielevorrart COMPUTER jetzt immer am Ende (wird dadurch auch nicht vorschnell gewählt)
+<!--           JOKER im Spielevorrart COMPUTER jetzt immer am Ende (wird dadurch auch nicht vorschnell gewÃ¤hlt)
 <!-- Vs. 0.90  Optimierungen: HilfeFunktion eingebaut; letztes COVER das der Computer gesetzt hat blinkt
 <!--           Horizontales Scrollen unterbunden; in h2 jetzt width: 100% statt 1100px;
-<!--           Achtung: async wird vom IE nicht unterstützt; dehalb manuelles STOPBLINK
+<!--           Achtung: async wird vom IE nicht unterstÃ¼tzt; dehalb manuelles STOPBLINK
 <!-- Vs. 0.91  WEB-basierte Version (gehostet auf Github); Hilfedatei jetzt im INTERNET gespeichert, nicht mehr lokal
-<!--           der Joker "img/Spiel_§§.png" muß umbenannt werden in Spiel_JO (§§ als Filename nicht zulässig)
-<!--           Files im Ordner IMG alle  auf 320*320 Pixel verkleinert (kürzere Ladezeiten); Blinken optimiert: wird
-<!--           jetzt auch inaktiv beim Klick in den Handvorrat (nächster Zug)
-<!-- Vs. 0.92  IE unterstützt kein GitHub Preview. Hilfedatei wird nicht angezeigt, daher Browsertest integriert. Bei 
+<!--           der Joker "img/Spiel_Â§Â§.png" muÃŸ umbenannt werden in Spiel_JO (Â§Â§ als Filename nicht zulÃ¤ssig)
+<!--           Files im Ordner IMG alle  auf 320*320 Pixel verkleinert (kÃ¼rzere Ladezeiten); Blinken optimiert: wird
+<!--           jetzt auch inaktiv beim Klick in den Handvorrat (nÃ¤chster Zug)
+<!-- Vs. 0.92  IE unterstÃ¼tzt kein GitHub Preview. Hilfedatei wird nicht angezeigt, daher Browsertest integriert. Bei 
 <!--           IE 11 oder kleiner wird lokale Hilfedatei angezeigt. Test auf diese Datei (file not found) nicht implmentierbar
-<!--           [ ginge nur für IMAGES in JAVAscript ]
+<!--           [ ginge nur fÃ¼r IMAGES in JAVAscript ]
 <!-- Vs. 1.00  Neue Spielfunktion: wenn eine 5er Diagonale gewonnen wurde erhalten Spieler/Computer ein STARS45 Cover. Wenn es  
-<!--           gesetzt wird dann werden nach dem Zufallsprinzip 5-10 COVER entfernt (grüne/gelbe/rote). Blaue bleiben erhalten
-<!--           Pro Spiel erhalten Spieler/Computer diese Möglichkeit nur einmal
-<!-- Vs. 1.01  Neue Spielfunktion Vs 1.0: jetzt über LEVEL ein und ausschalten; kein Aussetzen wenn noch Joker auf der Hand  
+<!--           gesetzt wird dann werden nach dem Zufallsprinzip 5-10 COVER entfernt (grÃ¼ne/gelbe/rote). Blaue bleiben erhalten
+<!--           Pro Spiel erhalten Spieler/Computer diese MÃ¶glichkeit nur einmal
+<!-- Vs. 1.01  Neue Spielfunktion Vs 1.0: jetzt Ã¼ber LEVEL ein und ausschalten; kein Aussetzen wenn noch Joker auf der Hand  
 <!-- Vs. 1.02  Hilfeseite: mit CLOSE Button, Spiel: Sprung ans HTML Seitenende beim Start
-<!-- Vs. 1.50  unterschiedliche COVER jetzt wählbar aus Sätzen; BUTTONs für Spieloptionen zusammengelegt  
-<!--           Spieloption LEVEL: wenn der Computer ein STARS-on-45 COVER erspielt wird das Ergebnisfeld blau gefärbt (Signal) 
+<!-- Vs. 1.50  unterschiedliche COVER jetzt wÃ¤hlbar aus SÃ¤tzen; BUTTONs fÃ¼r Spieloptionen zusammengelegt  
+<!--           Spieloption LEVEL: wenn der Computer ein STARS-on-45 COVER erspielt wird das Ergebnisfeld blau gefÃ¤rbt (Signal) 
 <!-- Vs. 1.51  CoverAuswahl: autom. Erkennung des localhost und FIREFOX Browser            
 <!--
 <!-- Vs. 1.60  CoverAuswahl: 5 komplett individuelle COVER-Saetze     
-<!-- Vs. 1.61  Intro-Video; Zähler für gewonnene/verlorene Partien ; durch die Cookie-Behandlung läuft diese Vs. nur mit der       
-<!--           parallel angepaßten Cover-Auswahl.HTML. Im Cookie ist ab Vs 1.61 der Spielstand verschlüsselt
+<!-- Vs. 1.61  Intro-Video; ZÃ¤hler fÃ¼r gewonnene/verlorene Partien ; durch die Cookie-Behandlung lÃ¤uft diese Vs. nur mit der       
+<!--           parallel angepaÃŸten Cover-Auswahl.HTML. Im Cookie ist ab Vs 1.61 der Spielstand verschlÃ¼sselt
 <!--
 <!--    folgende Definition bezieht sich auf TAG h1
-<!--    sieht redundant/widersprüchlich aus; aber sonst keine große H1 Überschrift im IE möglich
-<!--    noch optimieren: Farben / Rahmen von H2, ... aber sensibel; Tabellenaufbau schnell zerstört; IMG wichtig
-<!--    Darstellung IE und Firefox immer abweichend !! Script "user strict" : verschärfte Javascript Syntaxprüfung   
+<!--    sieht redundant/widersprÃ¼chlich aus; aber sonst keine groÃŸe H1 Ãœberschrift im IE mÃ¶glich
+<!--    noch optimieren: Farben / Rahmen von H2, ... aber sensibel; Tabellenaufbau schnell zerstÃ¶rt; IMG wichtig
+<!--    Darstellung IE und Firefox immer abweichend !! Script "user strict" : verschÃ¤rfte Javascript SyntaxprÃ¼fung   
 <!--    
-<!-- Vs 1.62   JUKEBOX in den Vollbildmodus schalten (Toogle); geht für Chrome, Firefox und Edge (mehr nicht getestet)
-<!--           zurück aus Fullscreen mit gleichem Button; alle Browser bieten auch ESC-Taste an (ungünstig fürs Tablet ohne Tastatur)
+<!-- Vs 1.62   JUKEBOX in den Vollbildmodus schalten (Toogle); geht fÃ¼r Chrome, Firefox und Edge (mehr nicht getestet)
+<!--           zurÃ¼ck aus Fullscreen mit gleichem Button; alle Browser bieten auch ESC-Taste an (ungÃ¼nstig fÃ¼rs Tablet ohne Tastatur)
 <!--           Browser werden in der Fallunterscheidung nicht erkannt, ist aber auch nicht notwendig
 <!--           Screen wird auf 110% Zoom skaliert, geht bis auf EDGE (sieht aber gut aus)
-<!--           weitere Anpassung: Funktion COVER um TimeOut ergänzt (auf Button !!); nach 5 Sekunden Spielneustart mit gewähltem Cover-Satz
+<!--           weitere Anpassung: Funktion COVER um TimeOut ergÃ¤nzt (auf Button !!); nach 5 Sekunden Spielneustart mit gewÃ¤hltem Cover-Satz
 <!--           innerhalb der Funktion selbst gehts nicht
 <!--           keine Wahl getroffen ? Neustart mit den bisherigen Covern
 <!-- -->
 h1 {
 color:#FF9F00; /* Farbe orange */
-font-size:20pt; /* Größe 20pt */
+font-size:20pt; /* GrÃ¶ÃŸe 20pt */
 font-family:arial, "lucida console", sans-serif; /* Schriftart */
 }
 h2 {
-font-size:10pt; /* Größe 10pt */
+font-size:10pt; /* GrÃ¶ÃŸe 10pt */
 }
   </style>
 </head><body style="color: yellow; background-color: black;" alink="#000099" link="#000099" vlink="#990099">
@@ -282,7 +282,7 @@ font-size:10pt; /* Größe 10pt */
 </table>
 </div>
 
-<!-- Test: 2 Spielfeldzähler einfuegen
+<!-- Test: 2 SpielfeldzÃ¤hler einfuegen
 <!-- -->
 <div style="float: right; width: 20%;">
 <table style="width: 75px; text-align: left; margin-left: auto; margin-right: 0px;" border="5" cellpadding="0" cellspacing="3">
@@ -302,13 +302,13 @@ font-size:10pt; /* Größe 10pt */
   </tbody>
 </table>
 </div>
-<!-- Test: 2 Spielfeldzähler einfuegen -Ende-
+<!-- Test: 2 SpielfeldzÃ¤hler einfuegen -Ende-
 
-<!-- Test: 3 Browser Fullscreen an/aus Button einfügen
+<!-- Test: 3 Browser Fullscreen an/aus Button einfÃ¼gen
 <!-- -->
 
 <div style="float: right; width: 20%;">
-<!-- eine Leerzeile zwischen den Blöcken mit <br>
+<!-- eine Leerzeile zwischen den BlÃ¶cken mit <br>
 <!-- -->
 <br>
 <table style="width: 75px; text-align: left; margin-left: auto; margin-right: 5px;" border="5" cellpadding="0" cellspacing="3">
@@ -325,7 +325,7 @@ font-size:10pt; /* Größe 10pt */
 <!-- -->
 <br>  
 
-<!--Einfügung aktivieren für gefälligere ALERT Boxen (Alternative) - funktioniert auf Anhieb 
+<!--EinfÃ¼gung aktivieren fÃ¼r gefÃ¤lligere ALERT Boxen (Alternative) - funktioniert auf Anhieb 
 <!--URL: alertbox.js.org
 <!-- --> <script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
 
@@ -351,7 +351,7 @@ z=0;
 "use strict"; // Javascript Norm-Code
  
 // da Anzeigedarstellung des Browsers unbekannt ist (zB ZOOM-Faktor) immer nach Start ans Ende = zum Spielfeld springen 
-// zuerst wird mit Start-Alert der Seitenanfang eingeblendet, dann Sprung ans Ende (schön zu sehen bei kleinem Fenster)
+// zuerst wird mit Start-Alert der Seitenanfang eingeblendet, dann Sprung ans Ende (schÃ¶n zu sehen bei kleinem Fenster)
 function Seitenende() {
   document.getElementById("lev").scrollIntoView(true);
 }
@@ -363,14 +363,14 @@ p = 0; // von Variable beim Zug des Spielers (aus Handvorrat)
 y = 0; // Klickposition Spieler: Spielfeld und Vorrat (erstmalig)
 zug = false; // true: Computer darf ziehen, sonst ist Spieler dran
 runde = 0; // Computerspielrunde, Spielbeginn = 1
-cswitch = false; // wenn wahr kann hat Spieler ein COVER zum legen gewählt (1. Schritt)
-bswitch = false; // Blinken erwünscht/abstellen des letzten Computer-Covers
+cswitch = false; // wenn wahr kann hat Spieler ein COVER zum legen gewÃ¤hlt (1. Schritt)
+bswitch = false; // Blinken erwÃ¼nscht/abstellen des letzten Computer-Covers
 mswitch = false; // Multi45er: falls true spielen mit mehreren Star-On-45
 jswitch = false; // Joker: falls true wird mit je einem Joker gespielt
 SOffenZu = false; // true: Computer-Handvorrat wird offen gespielt
 SCover45G = false; // Spieler:  COVER45 erhalten und ausgespielt falls true
 SCover45Y = false; // Computer: COVER45 erhalten und ausgespielt falls true
-SCover45Y_trigger = false; // Computer: braucht trigger um COVER45 auf der Hand später spielen zu können
+SCover45Y_trigger = false; // Computer: braucht trigger um COVER45 auf der Hand spÃ¤ter spielen zu kÃ¶nnen
 SDiagG = false; // Spieler: eine oder zwei 5er Diagonalen gewonnen wenn wahr -einmal pro Spiel-
 SDiagY = false; // Computer: ein oder zwei 5er Diagonalen gewonnen wenn wahr -eonmal pro spiel-
 SLevel = false; // Spiel um STARS-on-45 COVER
@@ -379,27 +379,27 @@ SiegY = 0;
 SiegG = 0; // Zaehlvariablen. Siegpunkte Diagonalen
 HighRow = 0; // Computerzug: opt. Feld Zeile
 HighCol = 0; // Computerzug: opt. Feld Spalte
-HighScore = 0; // Computerzug: Feld mit höchster Bewertung (aus func() anlegeopti)
-ZuffRow = 0; // Computerzug: zufällig Feld Zeile
-ZuffCol = 0; // Computerzug: zufällig Feld Spalte
-Doc45 = 0; // StarsOn45 Position Cover (PNG Grafik) für doc.image
+HighScore = 0; // Computerzug: Feld mit hÃ¶chster Bewertung (aus func() anlegeopti)
+ZuffRow = 0; // Computerzug: zufÃ¤llig Feld Zeile
+ZuffCol = 0; // Computerzug: zufÃ¤llig Feld Spalte
+Doc45 = 0; // StarsOn45 Position Cover (PNG Grafik) fÃ¼r doc.image
 Row45 = 0; // StarsOn45 Start-Zeile
 Col45 = 0; // StarsOn45 Start-Spalte
-ZFreiFeld = 0; // Computerzug: Anzahl der Optionen (möglicher freier Felder)
-zPrefN = 0; // in Anlageoptimierung für Computer: Diagonalen auswerten ob Gewinnposition Diagonale Joker+STARS45
-zPrefYC = 0; // in Anlageoptimierung für Computer: Diagonalen auswerten ob Gewinnposition Diagonale Cover
-zPrefGC = 0; // in Anlageoptimierung für Computer: Diagonalen auswerten ob Verlustposition Diagonale Cover
-ZSGewinn = 0; // Zähler für Gewinnspiele, Spieler
-ZCGewinn = 0; // Zähler für Gewinnspiele, Computer
+ZFreiFeld = 0; // Computerzug: Anzahl der Optionen (mÃ¶glicher freier Felder)
+zPrefN = 0; // in Anlageoptimierung fÃ¼r Computer: Diagonalen auswerten ob Gewinnposition Diagonale Joker+STARS45
+zPrefYC = 0; // in Anlageoptimierung fÃ¼r Computer: Diagonalen auswerten ob Gewinnposition Diagonale Cover
+zPrefGC = 0; // in Anlageoptimierung fÃ¼r Computer: Diagonalen auswerten ob Verlustposition Diagonale Cover
+ZSGewinn = 0; // ZÃ¤hler fÃ¼r Gewinnspiele, Spieler
+ZCGewinn = 0; // ZÃ¤hler fÃ¼r Gewinnspiele, Computer
 
 
 
-var CPos = 0;  // für Blinken an/aus .. die Position des letzten Cpmputer Covers (1-25)
+var CPos = 0;  // fÃ¼r Blinken an/aus .. die Position des letzten Cpmputer Covers (1-25)
 var t = 0;     // Event String SetInterval (Start/Stop Blinken)
 
 // um die Spielfeld-Tabelle TCF  wird eine virtuelle Tabelle VTCF gebaut die
 // jeweils oben/unten eine Zeile mehr hat und links/rechts eine Spalte mehr hat
-// die Randfelder werden als "Frei" markiert; dadurch erheblicher einfacher Prüfalgorithmus
+// die Randfelder werden als "Frei" markiert; dadurch erheblicher einfacher PrÃ¼falgorithmus
 
 var VTCF_2D = [];
 for (var row = 1; row <= 7; row++) {
@@ -413,7 +413,7 @@ for (var row = 1; row <= 7; row++) {
 
 //  ---------------------------------------
 
-var b; //aktuell gewählter Coversatz (1-5)
+var b; //aktuell gewÃ¤hlter Coversatz (1-5)
 var c; // Gewinnspiele Spieler  max 0-9
 var d; // Gewinnspiele Computer max 0-9
 
@@ -506,7 +506,7 @@ if (b==5) {
    img_Spiel_SP = "img/Spiel_SP.png";
    img_Stars45 = "img/Stars45.png";
    }  
-// Auswahl <> 1-5 und undefiniert führt zum gleichen Ergebnis  
+// Auswahl <> 1-5 und undefiniert fÃ¼hrt zum gleichen Ergebnis  
 if ((b<1) || (b>5)) {
    img_Tamla_Y = "img/Tamla_Y.png";
    img_Rock_Y = "img/Rock_Y.png";
@@ -523,7 +523,7 @@ if ((b<1) || (b>5)) {
 
 img_RockOla3 = "img/RockOla3.png";
 
-// Cookie löschen damit es nicht endlos identisch ist
+// Cookie lÃ¶schen damit es nicht endlos identisch ist
 // wahlweise auskommentieren .... damit das Default-COVER nicht bei jedem neuen Spiel wieder gesetzt wird 
 // document.cookie = "CoverTyp=;" + " expires=Thu, 01-Jan-70 00:00:01 GMT;";
 
@@ -552,7 +552,7 @@ for (var a=0 ; a<=7 ; a++ )
 // ---------------------------------------
 for (var a=0 ; a<=5 ; a++ ) // RED 6 Cover Spiel mir das Lied vom Tod einfach (2*2 gibts vorab)
 {
-   TCSR[a] = "§§";
+   TCSR[a] = "Â§Â§";
 }
 
 //  ---------------------------------------
@@ -579,7 +579,7 @@ shuffleTCS(TCSY);
 shuffleTCS(TCSG);
 shuffleTCS(TCSR);
 
-// Tabelle TCV: Vorrat gezogen auf der Hand für Spieler (Green)/Computer(Yellow)
+// Tabelle TCV: Vorrat gezogen auf der Hand fÃ¼r Spieler (Green)/Computer(Yellow)
 // verbrauchte Cover/unbelegte Felder werden auf "/" gesetzt
 var TCVY = [];
 var TCVG = [];
@@ -617,7 +617,7 @@ for (var ele = 1; ele <= 3; ele++) {
 
 //  ---------------------------------------
 
-// Tabelle 2 Dim. YesNoTab: bei Computer-Zug: alle mögl. belegbaren Felder
+// Tabelle 2 Dim. YesNoTab: bei Computer-Zug: alle mÃ¶gl. belegbaren Felder
 var YesNoTab_2D = [];
 for (var row = 1; row <= 5; row++) {
    var YesNoTab_1D = [];
@@ -630,7 +630,7 @@ for (var row = 1; row <= 5; row++) {
 
 //  ---------------------------------------
 
-// Tabelle 2 Dim. YesNoPref: bei Computer-Zug: Felder mit der höchsten Prefenz
+// Tabelle 2 Dim. YesNoPref: bei Computer-Zug: Felder mit der hÃ¶chsten Prefenz
 var YesNoPref_2D = [];
 for (var row = 1; row <= 5; row++) {
    var YesNoPref_1D = [];
@@ -644,7 +644,7 @@ for (var row = 1; row <= 5; row++) {
 //  ---------------------------------------
 
 //  ---------------------------------------
-// Setzen StarsOn45 zufällig - doc.images immer + 1 links nach rechts
+// Setzen StarsOn45 zufÃ¤llig - doc.images immer + 1 links nach rechts
 zufallszahl_rc();
 
 // Row45 = 2;  mal zu Testzwecken (dann zufallszahl_rc deakt.
@@ -699,7 +699,7 @@ function gamecontrol(y)
       // Spieler: der NACH Zug
       cswitch = false;
       if (spielende()!=true) {
-         // Spielende sowohl nach Spieler- oder Computerzug möglich
+         // Spielende sowohl nach Spieler- oder Computerzug mÃ¶glich
          if (zug) {
             runde = runde + 1;
             computer();
@@ -759,10 +759,10 @@ function gamecontrol(y)
 function pplayer(y)
 {
    // Klick : y=erstmal wohin geklickt?
-   // Klick : p=später immer die Quelle [y -> p ] sh. unten; 2 Züge
+   // Klick : p=spÃ¤ter immer die Quelle [y -> p ] sh. unten; 2 ZÃ¼ge
 
    zug = false;
-   // Plausiprüfung: Bereich des Computers; als Zugquelle verboten
+   // PlausiprÃ¼fung: Bereich des Computers; als Zugquelle verboten
    if (y >= 26) {
       if (y <= 35) {
          cswitch=false;
@@ -773,8 +773,8 @@ function pplayer(y)
    //  ---------------------------------------
 
    ;
-   // Plausiprüfung: zweiter Klick (Nach) muss im Spielfeld sein
-   // falls nicht alles zurück auf Anfang
+   // PlausiprÃ¼fung: zweiter Klick (Nach) muss im Spielfeld sein
+   // falls nicht alles zurÃ¼ck auf Anfang
 
    if (cswitch) {
       if ((y!=0) && (y>25)) {
@@ -789,7 +789,7 @@ function pplayer(y)
    //  ---------------------------------------
 
    ;
-   // Plausiprüfung: erster Zug vom Spielfeld nicht erlaubt, nur dorthin (CSwitch sonst gesetzt)
+   // PlausiprÃ¼fung: erster Zug vom Spielfeld nicht erlaubt, nur dorthin (CSwitch sonst gesetzt)
    if (y >= 1) {
       if (y <= 25) {
          if (!cswitch)
@@ -812,11 +812,11 @@ function pplayer(y)
             return;
          }
          else if (!cswitch) {
-            // gültiger VON-Zug aus Handvorrat
+            // gÃ¼ltiger VON-Zug aus Handvorrat
             cswitch = true;
             p = y;
             y = 0;
-            if (bswitch) { stopblink(CPos) }; // Vorsorglich; Funktion könnte aktiv sein
+            if (bswitch) { stopblink(CPos) }; // Vorsorglich; Funktion kÃ¶nnte aktiv sein
             return;
          }
       }
@@ -826,10 +826,10 @@ function pplayer(y)
     
    ;
    anlegepruef_player(y); 
-   // gewähltes COVER anlegbar ?
+   // gewÃ¤hltes COVER anlegbar ?
    if (YesNo) {
       anlegezug_player(y);
-      // alle Voraussetzungen OK - gültiger 2.ter Zug NACH
+      // alle Voraussetzungen OK - gÃ¼ltiger 2.ter Zug NACH
       YesNo = false;
       zug = true;
       // weiter mit Computer
@@ -850,7 +850,7 @@ function displayTCVG()
       if (TCVG[a] == "B") document.images[z+10].src = img_Beat_G;
       if (TCVG[a] == "T") document.images[z+10].src = img_Tamla_G;
       if (TCVG[a] == "R") document.images[z+10].src = img_Rock_G;
-      if (TCVG[a] == "§§") document.images[z+10].src = img_Spiel;
+      if (TCVG[a] == "Â§Â§") document.images[z+10].src = img_Spiel;
       if (TCVG[a] == "SP") document.images[z+10].src = img_Spiel_SP;
       z=z+1;
    }
@@ -875,7 +875,7 @@ function displayTCVY(SOffenZu)
          if (TCVY[a] == "B") document.images[z].src  = img_Beat_Y;
          if (TCVY[a] == "T") document.images[z].src  = img_Tamla_Y;
          if (TCVY[a] == "R") document.images[z].src  = img_Rock_Y;
-         if (TCVY[a] == "§§") document.images[z].src = img_Spiel;
+         if (TCVY[a] == "Â§Â§") document.images[z].src = img_Spiel;
          if (TCVY[a] == "SP") document.images[z].src = img_Spiel_SP;
          if (TCVY[a] == "45") document.images[z].src = img_Stars45;
          z=z+1;
@@ -889,7 +889,7 @@ function displayTCVY(SOffenZu)
 
 
 
-//  Mischalgorithmus für beliebige Tabellen
+//  Mischalgorithmus fÃ¼r beliebige Tabellen
 function shuffleTCS(array) {
    for (var i = array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -908,7 +908,7 @@ function zufallszahl(max) {
 //  Zufallszahl bestimmen Row / Column (nur STARS45)
 function zufallszahl_rc()
 {
-   // Zeile/Spalte für StarsOn45-Start
+   // Zeile/Spalte fÃ¼r StarsOn45-Start
    Row45=0;
    Col45=0;
    do
@@ -938,7 +938,7 @@ function computer()
    YesNo = false;
    
 
-   // jetzt "innere" Tabelle füllen
+   // jetzt "innere" Tabelle fÃ¼llen
    for (row = 2; row <= 6; row++) {
       for (col = 2; col <= 6; col++) {
          VTCF_2D[row][col] = TCF_3D[1][row-1][col-1]
@@ -947,13 +947,13 @@ function computer()
 
    //  ---------------------------------------
 
-   // YesNoTab vor nächstem Zug wieder leeren/löschen
+   // YesNoTab vor nÃ¤chstem Zug wieder leeren/lÃ¶schen
    for (i=1; i<=5; i++) {
       for (j=1; j<=5; j++) {
          YesNoTab_2D[i][j] = "#";
-         //Vorbeleg.: nicht möglich
+         //Vorbeleg.: nicht mÃ¶glich
          YesNoPref_2D[i][j] = 0;
-         //Vorbeleg.: geringste Priorität
+         //Vorbeleg.: geringste PrioritÃ¤t
       }
    }
 
@@ -972,7 +972,7 @@ function computer()
                break;
                // sobald aus dem Vorrat ein COVER passt abbrechen
             }
-            // nächstes COVER aus Vorrat
+            // nÃ¤chstes COVER aus Vorrat
             else {
             }
             ;
@@ -983,19 +983,19 @@ function computer()
    
    //  ---------------------------------------
    if (ZFreiFeld == 0) {
-      // kein Zug möglich; kein passendes Cover; Joker nachziehen
+      // kein Zug mÃ¶glich; kein passendes Cover; Joker nachziehen
       TCSR_Nachziehen("C");
       // Aufruf aus Computer
       return;
    }
 
-   // vor Anlegeoptimierung prüfen ... STARS45 auf der Hand und Situation angebracht auszuspielen ?
+   // vor Anlegeoptimierung prÃ¼fen ... STARS45 auf der Hand und Situation angebracht auszuspielen ?
 
    if (SCover45Y_trigger) {         
       if ((runde >= 9) && ((SiegG-SiegY) > 4)) {
          SCover45Y_trigger = false;
          alert("Computer spielt STARS-on-45");
-         // Spielmodus LEVEL: wenn Computer STARS45 gespielt Counterfeld wieder zurücksetzen
+         // Spielmodus LEVEL: wenn Computer STARS45 gespielt Counterfeld wieder zurÃ¼cksetzen
          document.getElementById("CCounter").style.backgroundColor = "black";
          zufallszahl_rc(); // ermitteln einer beliebigen Pos.: Row/Col 
          // Freifeldsuche
@@ -1016,7 +1016,7 @@ function computer()
        if ((runde >= 10) && ((SiegG-SiegY) > 1)) {
          SCover45Y_trigger = false;
          alert("Computer spielt STARS-on-45");
-         // Spielmodus LEVEL: wenn Computer STARS45 gespielt Counterfeld wieder zurücksetzen
+         // Spielmodus LEVEL: wenn Computer STARS45 gespielt Counterfeld wieder zurÃ¼cksetzen
          document.getElementById("CCounter").style.backgroundColor = "black";
          zufallszahl_rc(); // ermitteln einer beliebigen Pos.: Row/Col 
          // Freifeldsuche
@@ -1037,8 +1037,8 @@ function computer()
    }   
 
    // Anlegezug-Optimierung HighScore
-   // später:  Wechselspiel -> optim. Feld in Abhängigkeit vom Vorrat & Gegner blockieren!!
-   // bedenken: mehr als ein COVER kann hor./vert. passen ! Aussetzen nicht möglich
+   // spÃ¤ter:  Wechselspiel -> optim. Feld in AbhÃ¤ngigkeit vom Vorrat & Gegner blockieren!!
+   // bedenken: mehr als ein COVER kann hor./vert. passen ! Aussetzen nicht mÃ¶glich
 
    anlegeopti();
 
@@ -1061,16 +1061,16 @@ function computer()
 
 }
 
-//  Anlegen möglich ? gewähltes COVER gegen Spielfeld-Zelle für Spieler & Computer
+//  Anlegen mÃ¶glich ? gewÃ¤hltes COVER gegen Spielfeld-Zelle fÃ¼r Spieler & Computer
 function anlegecheck(TCFZelle, row, col, TCover)
 {
    // Achtung: diese Funktion wird
-   // a) pro Spielfeld aufgerufen, also Einzelprüfung wenn Computer am Zug
-   //    genaugenommen: Max. für 5*5=25 Felder mal bei <= 10 Vorrats-Ccovern des Computers, also max 250mal
-   // b) gezielt einmal aufgerufen wenn Spieler am Zug (für das geklickte Zielfeld)
+   // a) pro Spielfeld aufgerufen, also EinzelprÃ¼fung wenn Computer am Zug
+   //    genaugenommen: Max. fÃ¼r 5*5=25 Felder mal bei <= 10 Vorrats-Ccovern des Computers, also max 250mal
+   // b) gezielt einmal aufgerufen wenn Spieler am Zug (fÃ¼r das geklickte Zielfeld)
    //
-   // Besonderheit: TCover Stars-on-45 wird nicht geprüft... soll nicht im Normalspiel vom Computer gesetzt werden
-   // nur weil er auf ein freies Feld passen würde (wie ein SP-Joker)
+   // Besonderheit: TCover Stars-on-45 wird nicht geprÃ¼ft... soll nicht im Normalspiel vom Computer gesetzt werden
+   // nur weil er auf ein freies Feld passen wÃ¼rde (wie ein SP-Joker)
 
    var TCFZelle;
    var TCover;
@@ -1088,8 +1088,8 @@ function anlegecheck(TCFZelle, row, col, TCover)
 
    //  ---------------------------------------
 
-   // Prüfung: benachbarte Felder alle leer ? dann geht es nicht
-   // Displacement für äussere Tabelle setzen
+   // PrÃ¼fung: benachbarte Felder alle leer ? dann geht es nicht
+   // Displacement fÃ¼r Ã¤ussere Tabelle setzen
 
    row = row + 1;
    col = col + 1;
@@ -1141,7 +1141,7 @@ function anlegecheck(TCFZelle, row, col, TCover)
 
    row = row -1;
    col = col -1;
-   // für echte Spielfeld-Tabelle wieder zurückändern
+   // fÃ¼r echte Spielfeld-Tabelle wieder zurÃ¼ckÃ¤ndern
 
    var temp;
    // 1. zeile
@@ -1392,11 +1392,11 @@ function anlegecheck(TCFZelle, row, col, TCover)
 
    //  ---------------------------------------
 
-   // Prüfung Tabellenmitte
-   // Irgendwo in der Mitte; Zeile 1 und 5 schon geprüft (oben)
+   // PrÃ¼fung Tabellenmitte
+   // Irgendwo in der Mitte; Zeile 1 und 5 schon geprÃ¼ft (oben)
    // !!! (wird jetzt vorausgesetzt) - daher keine ROW-Abfrage !!!
    // Achtung:
-   //     Row=1 oder Row=5 immer noch möglich; es muss ja keine
+   //     Row=1 oder Row=5 immer noch mÃ¶glich; es muss ja keine
    //     Bedingung oben zutreffen - deshalb ausschliessen
 
 
@@ -1539,7 +1539,7 @@ function anlegecheck(TCFZelle, row, col, TCover)
    }
 
 
-   // Prüfung auf Joker: soll auf ein Diagonalfeld gesetzt werden?
+   // PrÃ¼fung auf Joker: soll auf ein Diagonalfeld gesetzt werden?
    if ((row==1)&&(col==1)) DiagonalFeld=true;
    if ((row==2)&&(col==2)) DiagonalFeld=true;
    if ((row==3)&&(col==3)) DiagonalFeld=true;
@@ -1555,8 +1555,8 @@ function anlegecheck(TCFZelle, row, col, TCover)
    if ((row==3)&&(col==5)) DiagonalFeld=true;
    if ((row==5)&&(col==3)) DiagonalFeld=true;
 
-   if (TCover == "§§") {
-      // kein Joker für Computer auf Diagonale zu Spielbeginn
+   if (TCover == "Â§Â§") {
+      // kein Joker fÃ¼r Computer auf Diagonale zu Spielbeginn
       if (zug) {
          if (runde <= 3) {
             if (YesNoTab_2D [row][col] == "#") {
@@ -1569,7 +1569,7 @@ function anlegecheck(TCFZelle, row, col, TCover)
    }
    ;
 
-   if ((TCover == "§§") && (!JokerSperre)) {
+   if ((TCover == "Â§Â§") && (!JokerSperre)) {
       // Joker - geht sonst immer
       YesNoTab_2D [row][col] = "J";
       YesNo = true;
@@ -1578,7 +1578,7 @@ function anlegecheck(TCFZelle, row, col, TCover)
    ;
 
    if (TCover == "SP") {
-      // kein Joker für Computer auf Diagonale zu Spielbeginn
+      // kein Joker fÃ¼r Computer auf Diagonale zu Spielbeginn
       if (zug) {
          if (runde <= 3) {
             if (YesNoTab_2D [row][col] == "#") {
@@ -1603,13 +1603,13 @@ function anlegecheck(TCFZelle, row, col, TCover)
    //  ---------------------------------------
 }
 
-//  Spieler & Computer: Anlegeprüfung für Scan&Play Joker 
+//  Spieler & Computer: AnlegeprÃ¼fung fÃ¼r Scan&Play Joker 
 function anlegecheck_SPJoker(TCFZelle, row, col, TCover)
 {
 
    // Achtung: diese Funktion wird
-   // a) gezielt einmal aufgerufen wenn Spieler am Zug (für das geklickte Zielfeld)
-   // b) auch für den Computer nur einmal aufgerufen (Ergebnis von anlegeopti()-Auswertung
+   // a) gezielt einmal aufgerufen wenn Spieler am Zug (fÃ¼r das geklickte Zielfeld)
+   // b) auch fÃ¼r den Computer nur einmal aufgerufen (Ergebnis von anlegeopti()-Auswertung
 
    var TCFZelle;
    var TCover;
@@ -1626,8 +1626,8 @@ function anlegecheck_SPJoker(TCFZelle, row, col, TCover)
 
    //  ---------------------------------------
 
-   // Prüfung: benachbarte Felder alle leer ? nicht nötig; hier zulässig
-   // Displacement für äussere Tabelle setzen
+   // PrÃ¼fung: benachbarte Felder alle leer ? nicht nÃ¶tig; hier zulÃ¤ssig
+   // Displacement fÃ¼r Ã¤ussere Tabelle setzen
 
    row = row + 1;
    col = col + 1;
@@ -1638,11 +1638,11 @@ function anlegecheck_SPJoker(TCFZelle, row, col, TCover)
       return;
    }
 
-   // Check Umgebung - Ränder berücksichtigen
+   // Check Umgebung - RÃ¤nder berÃ¼cksichtigen
 
    row = row -1;
    col = col -1;
-   // für echte Spielfeld-Tabelle wieder zurückändern
+   // fÃ¼r echte Spielfeld-Tabelle wieder zurÃ¼ckÃ¤ndern
 
    //  ---------------------------------------
 
@@ -1654,13 +1654,13 @@ function anlegecheck_SPJoker(TCFZelle, row, col, TCover)
    }
 }
 
-//  Spieler & Computer: Anlegeprüfung für STARSon45 
+//  Spieler & Computer: AnlegeprÃ¼fung fÃ¼r STARSon45 
 function anlegecheck_STARS45(TCFZelle, row, col, TCover)
 {
 
    // Achtung: diese Funktion wird
-   // a) gezielt einmal aufgerufen wenn Spieler am Zug (für das geklickte Zielfeld)
-   // b) auch für den Computer nur einmal aufgerufen (Ergebnis von anlegeopti()-Auswertung
+   // a) gezielt einmal aufgerufen wenn Spieler am Zug (fÃ¼r das geklickte Zielfeld)
+   // b) auch fÃ¼r den Computer nur einmal aufgerufen (Ergebnis von anlegeopti()-Auswertung
 
    var TCFZelle;
    var TCover;
@@ -1677,8 +1677,8 @@ function anlegecheck_STARS45(TCFZelle, row, col, TCover)
 
    //  ---------------------------------------
 
-   // Prüfung: benachbarte Felder alle leer ? nicht nötig; hier zulässig
-   // Displacement für äussere Tabelle setzen
+   // PrÃ¼fung: benachbarte Felder alle leer ? nicht nÃ¶tig; hier zulÃ¤ssig
+   // Displacement fÃ¼r Ã¤ussere Tabelle setzen
 
    row = row + 1;
    col = col + 1;
@@ -1689,11 +1689,11 @@ function anlegecheck_STARS45(TCFZelle, row, col, TCover)
       return;
    }
 
-   // Check Umgebung - Ränder berücksichtigen
+   // Check Umgebung - RÃ¤nder berÃ¼cksichtigen
 
    row = row -1;
    col = col -1;
-   // für echte Spielfeld-Tabelle wieder zurückändern
+   // fÃ¼r echte Spielfeld-Tabelle wieder zurÃ¼ckÃ¤ndern
 
    //  ---------------------------------------
 
@@ -1705,7 +1705,7 @@ function anlegecheck_STARS45(TCFZelle, row, col, TCover)
    }
 }
 
-//  Anlegezug; Gültigkeit der Pos steht schon fest, COVER aus Handvorrat wird gesucht
+//  Anlegezug; GÃ¼ltigkeit der Pos steht schon fest, COVER aus Handvorrat wird gesucht
 function anlegezug(row, col)
 {
    
@@ -1822,9 +1822,9 @@ function anlegezug(row, col)
 
    //  ---------------------------------------
 
-   // COVER_Feld (P/B/T/R): kein passendes Cover im Vorrat; vielleicht JOKER? §§ oder SP
+   // COVER_Feld (P/B/T/R): kein passendes Cover im Vorrat; vielleicht JOKER? Â§Â§ oder SP
    for (k=1; k <=10; k++) {
-      if (TCVY[k]=="§§") {
+      if (TCVY[k]=="Â§Â§") {
          TCFDrop(k,  (row), col);
          TCVY_Nachziehen(k);
          return;
@@ -1851,10 +1851,10 @@ function anlegezug(row, col)
 
 }
 
-//  Nachziehen Computer; es wird aufgerückt im Handvorrat
+//  Nachziehen Computer; es wird aufgerÃ¼ckt im Handvorrat
 function TCVY_Nachziehen(k)
 {
-   //Aufrücken im Vorrat - Nachziehen normal (Computer)
+   //AufrÃ¼cken im Vorrat - Nachziehen normal (Computer)
 
    for (var b=k; b<=9; b++) {
       TCVY[b] = TCVY[b+1];
@@ -1867,7 +1867,7 @@ function TCVY_Nachziehen(k)
          if (TCVY[b] == "P") document.images[26+b].src  = img_Pop_Y;
          if (TCVY[b] == "T") document.images[26+b].src  = img_Tamla_Y;
          if (TCVY[b] == "R") document.images[26+b].src  = img_Rock_Y;
-         if (TCVY[b] == "§§") document.images[26+b].src = img_Spiel;
+         if (TCVY[b] == "Â§Â§") document.images[26+b].src = img_Spiel;
          if (TCVY[b] == "SP") document.images[26+b].src = img_Spiel_SP;
          if (TCVY[b] == "45") document.images[26+b].src = img_Stars45;
       }
@@ -1884,15 +1884,15 @@ function TCVY_Nachziehen(k)
       if (TCSY[a] != "/")
       {
          TCVY[k] = TCSY[a];
-         // Positionsgerecht füllen
+         // Positionsgerecht fÃ¼llen
          TCSY[a] = "/";
-         // Entnahmepos. löschen
+         // Entnahmepos. lÃ¶schen
          if (SOffenZu) {
             if (TCVY[k] == "B") document.images[26+k].src = img_Beat_Y;
             if (TCVY[k] == "P") document.images[26+k].src = img_Pop_Y;
             if (TCVY[k] == "T") document.images[26+k].src = img_Tamla_Y;
             if (TCVY[k] == "R") document.images[26+k].src = img_Rock_Y;
-            if (TCVY[k] == "§§") document.images[26+k].src = img_Spiel;
+            if (TCVY[k] == "Â§Â§") document.images[26+k].src = img_Spiel;
             if (TCVY[k] == "SP") document.images[26+k].src = img_Spiel_SP;
             if (TCVY[k] == "45") document.images[26+k].src = img_Stars45;
          }
@@ -1904,16 +1904,16 @@ function TCVY_Nachziehen(k)
       }
    }
 
-   // Handvorrat sortieren, sodaß Joker am Ende liegen
+   // Handvorrat sortieren, sodaÃŸ Joker am Ende liegen
    TCVY_Joker45_AnsEnde();
 }
 
-//  Nachziehen aus Joker-Vorrat für COMPUTER
+//  Nachziehen aus Joker-Vorrat fÃ¼r COMPUTER
 function TCSR_Nachziehen(callby)
 {
    // Nachziehen aus Joker-Vorrat
    // "C" aus function computer()   - Computer kann nicht legen; aussetzen
-   // "S" aus function SpielJoker() - Computer erhält Joker zu Spielbeginn
+   // "S" aus function SpielJoker() - Computer erhÃ¤lt Joker zu Spielbeginn
 
    var callby;
    if (callby == "C") {
@@ -1928,13 +1928,13 @@ function TCSR_Nachziehen(callby)
 
    for (var a=0; a<=11; a++) {
       if (TCSR[a] != "/")   {
-         // Leerstellen überspringen
+         // Leerstellen Ã¼berspringen
          TCVY[i] = TCSR[a];
-         // Positionsgerecht füllen
+         // Positionsgerecht fÃ¼llen
          TCSR[a] = "/";
-         // Entnahmepos. löschen
+         // Entnahmepos. lÃ¶schen
          if (SOffenZu) {
-            if (TCVY[i] == "§§") document.images[26+i].src = img_Spiel;
+            if (TCVY[i] == "Â§Â§") document.images[26+i].src = img_Spiel;
             if (TCVY[i] == "SP") document.images[26+i].src = img_Spiel_SP;
          }
          else {
@@ -1944,7 +1944,7 @@ function TCSR_Nachziehen(callby)
          // Exit FOR
       }
    }
-   // Handvorrat sortieren, sodaß Joker/STARS45 am Ende liegen
+   // Handvorrat sortieren, sodaÃŸ Joker/STARS45 am Ende liegen
    TCVY_Joker45_AnsEnde();
 }
 
@@ -2008,12 +2008,12 @@ function TCFDrop(k, row, col)
    }
 
    //  ---------------------------------------
-   if (TCVY[k] == "§§")
+   if (TCVY[k] == "Â§Â§")
    {
       document.images[displace].src = img_Spiel;
       TCF_3D[1][row][col] = "J";
       // Joker
-      TCF_3D[2][row][col] = "§§";
+      TCF_3D[2][row][col] = "Â§Â§";
       TCF_3D[3][row][col] = "";
    }
 
@@ -2082,9 +2082,9 @@ function TCFDrop_45(row, col)
 
    //  ---------------------------------------
 
-   if (TCVY[1] == "§§") {
+   if (TCVY[1] == "Â§Â§") {
       TCF_3D[1][row][col] = "J";
-      TCF_3D[2][row][col] = "§§";
+      TCF_3D[2][row][col] = "Â§Â§";
       TCF_3D[3][row][col] = "";
       document.images[displace].src = img_Spiel;
    }
@@ -2104,7 +2104,7 @@ function TCFDrop_45(row, col)
 
 //  ---------------------------------------
 
-//  COVER Computer No 1 aus Handvorrat anlegen an Joker (§§/SP); geht immer; sonst wie TCFDrop
+//  COVER Computer No 1 aus Handvorrat anlegen an Joker (Â§Â§/SP); geht immer; sonst wie TCFDrop
 function TCFDrop_J(row, col)
 {
    var displace;
@@ -2145,9 +2145,9 @@ function TCFDrop_J(row, col)
 
    //  ---------------------------------------
 
-   if (TCVY[1] == "§§") {
+   if (TCVY[1] == "Â§Â§") {
       TCF_3D[1][row][col] = "J";
-      TCF_3D[2][row][col] = "§§";
+      TCF_3D[2][row][col] = "Â§Â§";
       TCF_3D[3][row][col] = "";
       document.images[displace].src = img_Spiel;
    }
@@ -2250,7 +2250,7 @@ function anlegeopti()
             if ((i==1)&&(j==5)) YesNoPref_2D[i][j] = YesNoPref_2D[i][j] + 3;
             if ((i==2)&&(j==4)) YesNoPref_2D[i][j] = YesNoPref_2D[i][j] + 3;
             if ((i==3)&&(j==3)) YesNoPref_2D[i][j] = YesNoPref_2D[i][j] + 1;
-            // noch eins mehr für die Mitte
+            // noch eins mehr fÃ¼r die Mitte
             if ((i==4)&&(j==2)) YesNoPref_2D[i][j] = YesNoPref_2D[i][j] + 3;
             if ((i==5)&&(j==1)) YesNoPref_2D[i][j] = YesNoPref_2D[i][j] + 3;
 
@@ -2258,7 +2258,7 @@ function anlegeopti()
       }
    }
 
-   // die Mittelfelder am Rand höher bewerten (3er Doppeldiagonalen)
+   // die Mittelfelder am Rand hÃ¶her bewerten (3er Doppeldiagonalen)
    if (YesNoTab_2D[1][3] == "+") YesNoPref_2D[1][3] = YesNoPref_2D[1][3] + 2;
    if (YesNoTab_2D[3][1] == "+") YesNoPref_2D[3][1] = YesNoPref_2D[3][1] + 2;
    if (YesNoTab_2D[3][5] == "+") YesNoPref_2D[3][5] = YesNoPref_2D[3][5] + 2;
@@ -2295,7 +2295,7 @@ function anlegeopti()
 
 //  ---------------------------------------
 
-//  für Computer kein HighScore vorhanden - Zufallszug bestimmen ----
+//  fÃ¼r Computer kein HighScore vorhanden - Zufallszug bestimmen ----
 function anlegepos_zufall()
 {
    var i;
@@ -2306,7 +2306,7 @@ function anlegepos_zufall()
    ZFreiFeld = 0;
    YesNo = false;
 
-   // Zähler der max. möglichen, ziehbaren Felder
+   // ZÃ¤hler der max. mÃ¶glichen, ziehbaren Felder
    for (row=1; row<=5; row++) {
       for (col=1; col<=5; col++)  {
          if (YesNoTab_2D[row][col] == "+") {
@@ -2337,7 +2337,7 @@ function anlegepos_zufall()
          }
       }
    }
-   // alte Routine: langsam auf Tablets gegen Spielende (viele SIM-Läufe)
+   // alte Routine: langsam auf Tablets gegen Spielende (viele SIM-LÃ¤ufe)
    /* YesNo = false;
    do {
    do
@@ -2353,7 +2353,7 @@ function anlegepos_zufall()
    if (YesNoTab_2D[row][col] == "+") YesNo = true;
    }
    while (!YesNo);
-   YesNoTab_2D[row][col] = "#";  // Feld row/col gewählt; als belegt kennzeichnen
+   YesNoTab_2D[row][col] = "#";  // Feld row/col gewÃ¤hlt; als belegt kennzeichnen
    ZuffRow = row;
    ZuffCol = col;
    // alert("Zufall: " + ZuffRow + " " + ZuffCol);
@@ -2361,7 +2361,7 @@ function anlegepos_zufall()
 
 }
 
-//  für den Spieler: Prüfung ob Anlegen des gewählten COVERS möglich (Hauptmodul)
+//  fÃ¼r den Spieler: PrÃ¼fung ob Anlegen des gewÃ¤hlten COVERS mÃ¶glich (Hauptmodul)
 function anlegepruef_player(y)
 {
    var i;
@@ -2371,7 +2371,7 @@ function anlegepruef_player(y)
    YesNo = false;
 
 
-   // jetzt "innere" Tabelle füllen
+   // jetzt "innere" Tabelle fÃ¼llen
    for (row = 2; row <= 6; row++) {
       for (col = 2; col <= 6; col++) {
          VTCF_2D[row][col] = TCF_3D[1][row-1][col-1]
@@ -2380,11 +2380,11 @@ function anlegepruef_player(y)
 
    //  ---------------------------------------
 
-   // YesNoTab vor nächstem Zug wieder leeren/löschen
+   // YesNoTab vor nÃ¤chstem Zug wieder leeren/lÃ¶schen
    for (i=1; i<=5; i++) {
       for (j=1; j<=5; j++) {
          YesNoTab_2D[i][j] = "#";
-         //Vorbeleg.: nicht möglich
+         //Vorbeleg.: nicht mÃ¶glich
       }
    }
 
@@ -2408,14 +2408,14 @@ function anlegepruef_player(y)
    }
    // normaler Check
    anlegecheck(TCF_3D[1][row][col], row, col, TCVG[p-36+1])
-   // YesNo wird zurückgegeben; True=Anlegecheck positiv
+   // YesNo wird zurÃ¼ckgegeben; True=Anlegecheck positiv
 }
 
 //  Anlegen des Spielers incl Visualisierung
 function anlegezug_player(y)
 {
    // document.image (Grafik) muss immer um +1 versetzt werden
-   // ist nicht 2-dim; zählt von 1-25
+   // ist nicht 2-dim; zÃ¤hlt von 1-25
    var displace;
    displace = y + 1;
    var k;
@@ -2441,7 +2441,7 @@ function anlegezug_player(y)
       TCF_3D[3][row][col] = TCVG[p-36+1];
       // Stil (P/T/R/B)
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
    }
 
@@ -2457,7 +2457,7 @@ function anlegezug_player(y)
       TCF_3D[3][row][col] = TCVG[p-36+1];
       // Stil (P/T/R/B)
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
    }
 
@@ -2473,7 +2473,7 @@ function anlegezug_player(y)
       TCF_3D[3][row][col] = TCVG[p-36+1];
       // Stil (P/T/R/B)
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
    }
 
@@ -2489,22 +2489,22 @@ function anlegezug_player(y)
       TCF_3D[3][row][col] = TCVG[p-36+1];
       // Stil (P/T/R/B)
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
    }
 
    //  ---------------------------------------
 
-   if (k == "§§")
+   if (k == "Â§Â§")
    {
       document.images[displace].src = img_Spiel;
       TCF_3D[1][row][col] = "J";
       // Joker
-      TCF_3D[2][row][col] = "§§";
+      TCF_3D[2][row][col] = "Â§Â§";
       // normal
       TCF_3D[3][row][col] = "";
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
    }
 
@@ -2519,7 +2519,7 @@ function anlegezug_player(y)
       // Scan&Play
       TCF_3D[3][row][col] = "";
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
    }
 
@@ -2534,7 +2534,7 @@ function anlegezug_player(y)
       // Scan&Play
       TCF_3D[3][row][col] = "";
       YesNoTab_2D[row][col] = "#";
-      // Feld nicht mehr frei/möglich
+      // Feld nicht mehr frei/mÃ¶glich
       cswitch = false;
       // sonst werden immer nur COVER gesetzt; keine Aktion ausser Feldbelegung
       // Ausnahme: STARS45 ... COVER vom Spielfeld entfernen
@@ -2550,12 +2550,12 @@ function anlegezug_player(y)
       {
          TCVG[p-36+1] = TCSG[a];
          TCSG[a]="/";
-         // Positionsgerecht füllen
+         // Positionsgerecht fÃ¼llen
          if (TCVG[p-36+1] == "B") document.images[p+1].src = img_Beat_G;
          if (TCVG[p-36+1] == "P") document.images[p+1].src = img_Pop_G;
          if (TCVG[p-36+1] == "T") document.images[p+1].src = img_Tamla_G;
          if (TCVG[p-36+1] == "R") document.images[p+1].src = img_Rock_G;
-         if (TCVG[p-36+1] == "§§") document.images[p+1].src = img_Spiel;
+         if (TCVG[p-36+1] == "Â§Â§") document.images[p+1].src = img_Spiel;
          if (TCVG[p-36+1] == "SP") document.images[p+1].src = img_Spiel_SP;
          p = 0;
          y= 0;
@@ -2578,7 +2578,7 @@ function siegercalc()
    var zfeld;
    var ZG4Total; var ZY4Total;
 
-   // Auswerten 2 5er Diagonalen - nur Yellow/Green zählen
+   // Auswerten 2 5er Diagonalen - nur Yellow/Green zÃ¤hlen
 
    ZY = 0;
    ZG = 0;
@@ -2600,7 +2600,7 @@ function siegercalc()
       if (ZY < ZG) SiegG = SiegG + 5;
    }
    
-   // für Testzwecke
+   // fÃ¼r Testzwecke
    //if (runde == 5) {
    // SCover45G = true; SDiagG = true;
    // SCover45Y = true; SDiagY = true;
@@ -2608,7 +2608,7 @@ function siegercalc()
    // }
       
    // neu ab Vs 1.00: Check ob lange Diag li. oben/re. unten gewonnen wurde
-   // ZG > ZY ... mehr grüne als gelbe Cover usw.
+   // ZG > ZY ... mehr grÃ¼ne als gelbe Cover usw.
    if (zfeld == 5) {
       if ((!SDiagY) && (ZY > ZG)) {
          SDiagY = true;
@@ -2650,7 +2650,7 @@ function siegercalc()
          }
     }   
    
-   // Auswerten 4 Lange 4er Diagonalen - nur Yellow/Green zählen
+   // Auswerten 4 Lange 4er Diagonalen - nur Yellow/Green zÃ¤hlen
 
    ZY = 0; ZY4Total = 0;
    ZG = 0; ZG4Total = 0;
@@ -2739,7 +2739,7 @@ function siegercalc()
    }   
    //  ---------------------------------------
 
-   // Auswerten 4 Lange 3er Diagonalen - nur Yellow/Green zählen
+   // Auswerten 4 Lange 3er Diagonalen - nur Yellow/Green zÃ¤hlen
 
    ZY = 0;
    ZG = 0;
@@ -2815,7 +2815,7 @@ function siegercalc()
 
    //  ---------------------------------------
 
-   // Auswerten 4 kurze 2er Diagonalen - nur Yellow/Green zählen
+   // Auswerten 4 kurze 2er Diagonalen - nur Yellow/Green zÃ¤hlen
 
    ZY = 0;
    ZG = 0;
@@ -2896,7 +2896,7 @@ function siegercalc()
 //  Computer: 5er Diagonalen nur bespielen wenn noch nicht gewonnen/verloren
 function anlegeopti_diagonal()
 {
-   // Prüfen: auf den 5er Hauptdiagonalen schon Majorität oder Minorität ? dann Preferenz reduzieren
+   // PrÃ¼fen: auf den 5er Hauptdiagonalen schon MajoritÃ¤t oder MinoritÃ¤t ? dann Preferenz reduzieren
 
    zPrefN = 0;
    zPrefYC = 0;
@@ -2962,7 +2962,7 @@ function anlegeopti_diagonal()
    zPrefYC = 0;
    zPrefGC = 0;
 
-   // das gleiche für Rechts (d.h. rechts oben nach links unten)
+   // das gleiche fÃ¼r Rechts (d.h. rechts oben nach links unten)
    j=5;
    for (i=1; i<=5; i++) {
       if (TCF_3D[1][i][j] == "C") {
@@ -3038,12 +3038,12 @@ function anlegeopti_diagonal()
    c) um das Spiel zu verlagern (wann sinnvoll?)
 
    Bedenken:
-   Diagonalen können CoverTyp/SpielerTyp-gemischt sein
-   Lücken haben
-   Lücken nicht nur am Ende prüfen
-   Zusatzprüfung:
-   - muß S&P gesetzt werden ? ist nicht auch ein normales Cover möglich?
-   - ist die Diagonale ggf schon gewonnen (Überzahl), also S&P unnötig?
+   Diagonalen kÃ¶nnen CoverTyp/SpielerTyp-gemischt sein
+   LÃ¼cken haben
+   LÃ¼cken nicht nur am Ende prÃ¼fen
+   ZusatzprÃ¼fung:
+   - muÃŸ S&P gesetzt werden ? ist nicht auch ein normales Cover mÃ¶glich?
+   - ist die Diagonale ggf schon gewonnen (Ãœberzahl), also S&P unnÃ¶tig?
 
    */
 }
@@ -3082,10 +3082,10 @@ function OffenZu()
 //  Button: Aussetzen - Spieler zieht Joker nach 
 function JokerZieh()
 {
-   // Prüfung vorab: Aussetzen nur zulässig wenn kein Joker auf der Hand
+   // PrÃ¼fung vorab: Aussetzen nur zulÃ¤ssig wenn kein Joker auf der Hand
    for (var i=1; i<=10; i++) {
-        if ((TCVG[i] == "§§") || (TCVG[i] == "SP")) {
-            alert("Aussetzen nicht möglich ! noch Joker auf der Hand");
+        if ((TCVG[i] == "Â§Â§") || (TCVG[i] == "SP")) {
+            alert("Aussetzen nicht mÃ¶glich ! noch Joker auf der Hand");
             return;
         }    
    }
@@ -3100,7 +3100,7 @@ function TCSR_Nachziehenplayer()
 {       
      
   loop: {
-      // Joker auf die Hand (zusätzlich)
+      // Joker auf die Hand (zusÃ¤tzlich)
       for (var k=1; k<=10; k++) {
          if (TCVG[k] == "/") {
             // Position suchen
@@ -3110,7 +3110,7 @@ function TCSR_Nachziehenplayer()
                   TCVG[k] = TCSR[a];
                   TCSR[a] ="/";
                   // verbraucht
-                  if (TCVG[k] == "§§") document.images[36+k].src = img_Spiel;
+                  if (TCVG[k] == "Â§Â§") document.images[36+k].src = img_Spiel;
                   if (TCVG[k] == "SP") document.images[36+k].src = img_Spiel_SP;
                   break loop;
                   // Exit 2*FOR;
@@ -3123,7 +3123,7 @@ function TCSR_Nachziehenplayer()
 
 //  ---------------------------------------
 
-//  ein zusätzlicher Computerzug (wenn Spieler Joker nimmt)
+//  ein zusÃ¤tzlicher Computerzug (wenn Spieler Joker nimmt)
 function computerzugplus()
 {
    zug = true;
@@ -3207,7 +3207,7 @@ function TCVY_Joker45_AnsEnde()
    }
    // alert("X");
    for (var i=1; i<=(handkarten-1); i++) {
-      if (TCVY[i] == "§§") {
+      if (TCVY[i] == "Â§Â§") {
          temp = TCVY[i];
          TCVY[i] = TCVY[i+1];
          TCVY[i+1] = temp;
@@ -3248,7 +3248,7 @@ function TCVY_Joker45_AnsEnde()
 
 //  ---------------------------------------
 
-//  Spieler nimmt Zug zurück (nicht realisiert)
+//  Spieler nimmt Zug zurÃ¼ck (nicht realisiert)
 function ZugZurueck()
 {
    alert("Zurueck");
@@ -3299,7 +3299,7 @@ function OnlineHilfe()
    HilfeFenster.focus();        
    
 }
-//  Button: Spieler kann zwischen verschiedenen COVER-Sätzen wählen
+//  Button: Spieler kann zwischen verschiedenen COVER-SÃ¤tzen wÃ¤hlen
 function CoverAuswahl()
 {
    // ****************************************************************************************************************
@@ -3335,7 +3335,7 @@ function CoverAuswahl()
     var agent = navigator.userAgent.toUpperCase();
     i = agent.indexOf("FIREFOX",1);
     if(i!=(-1)) { 
-       // nur für den lokalen Testbetrieb (localhost) mit FIREFOX gedacht
+       // nur fÃ¼r den lokalen Testbetrieb (localhost) mit FIREFOX gedacht
        if (urlheader=="file:") {        
           var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
           // Hilfe immer in den Vordergrund
@@ -3351,7 +3351,9 @@ function CoverAuswahl()
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Hilfe immer in den Vordergrund
        CoverFenster.focus();
-       location.reload(forcedReload);
+      setTimeout(function() {
+       location.reload();
+   }, 100);      
        return;        
        }
 }
@@ -3374,7 +3376,7 @@ function startblink(CPos) {
    , blink_speed);
    
    // stopblink als  ASsync Funktion hier aktivieren 
-   // ansonsten hält der INTERPRETER das Javascipt an; es blinkt erst garnicht
+   // ansonsten hÃ¤lt der INTERPRETER das Javascipt an; es blinkt erst garnicht
    
    // stopblink(CPos);
 //
@@ -3417,9 +3419,9 @@ function Multi45() {
         z = z + 1;                 
         do
         {
-           // Setzen StarsOn45 zufällig - doc.images immer + 1 links nach rechts
-           zufallszahl_rc(); // für Row/Col 1-5
-           // kann belegt sein (zB wenn Computer anfängt und erstes COVER gesetzt hat) 
+           // Setzen StarsOn45 zufÃ¤llig - doc.images immer + 1 links nach rechts
+           zufallszahl_rc(); // fÃ¼r Row/Col 1-5
+           // kann belegt sein (zB wenn Computer anfÃ¤ngt und erstes COVER gesetzt hat) 
            if (TCF_3D[1][Row45][Col45] == "/") { 
                // Stars-on-45
                TCF_3D[1][Row45][Col45] = "45";               
@@ -3453,7 +3455,7 @@ function vergebenSTARS45() {
           if (TCVG[a] == "/")
           {
              TCVG[a] = "45";
-             // Positionsgerecht am Ende anfügen         
+             // Positionsgerecht am Ende anfÃ¼gen         
              document.images[36+a].src = img_Stars45; 
              break;            
           }
@@ -3463,14 +3465,14 @@ function vergebenSTARS45() {
       {   
        SCover45Y = false;   
        SCover45Y_trigger = true;
-       // Spielmodus LEVEL: wenn Computer STARS45 Cover dann Counterfeld färben (Info an den Spieler)
+       // Spielmodus LEVEL: wenn Computer STARS45 Cover dann Counterfeld fÃ¤rben (Info an den Spieler)
        document.getElementById("CCounter").style.backgroundColor = "darkblue";
        for (var a=1; a<=10; a++)
        {
           if (TCVY[a] == "/")
           {
              TCVY[a] = "45";
-             // Positionsgerecht am Ende anfügen         
+             // Positionsgerecht am Ende anfÃ¼gen         
              if (SOffenZu) { 
                 document.images[26+a].src = img_Stars45;     
              }   
@@ -3480,7 +3482,7 @@ function vergebenSTARS45() {
     }
  }
 
-//  STARS45: wenn ausgespielt (und auf der Hand) zufällig COVER aus dem spiel nehmen 
+//  STARS45: wenn ausgespielt (und auf der Hand) zufÃ¤llig COVER aus dem spiel nehmen 
 function spielzugSTARS45() {
 
 
@@ -3490,7 +3492,7 @@ var g; // Gesamtzahl der COVER die vom Spielfeld genommen werden
 
 // test alert("45");
 
-// Step 1: Zählen aller Cover auf dem Spielfeld ausser "45"
+// Step 1: ZÃ¤hlen aller Cover auf dem Spielfeld ausser "45"
 for (var i=1; i<=5; i++) {
       for (var j=1; j<= 5; j++) {       
            if (TCF_3D[1][i][j] == "C") {
@@ -3522,7 +3524,7 @@ do  {
       TCF_3D[3][Row45][Col45] = ""
       Doc45 = (Row45-1)*5 + Col45 + 1;
       // timer          
-      document.images[Doc45].src = img_RockOla3; // auch die Graphik zurücksetzen
+      document.images[Doc45].src = img_RockOla3; // auch die Graphik zurÃ¼cksetzen
       g = g - 1;
       }
    if (TCF_3D[1][Row45][Col45] == "J") {
@@ -3530,7 +3532,7 @@ do  {
       TCF_3D[2][Row45][Col45] = ""
       TCF_3D[3][Row45][Col45] = ""
       Doc45 = (Row45-1)*5 + Col45 + 1;
-      document.images[Doc45].src = img_RockOla3; // auch die Graphik zurücksetzen
+      document.images[Doc45].src = img_RockOla3; // auch die Graphik zurÃ¼cksetzen
       g = g - 1;
       }   
    }  
@@ -3542,7 +3544,7 @@ function istNumerischRobust(str) {
 }
 
 function ResetSpielstand() {
-// Spielstand auf Null zurücksetzen
+// Spielstand auf Null zurÃ¼cksetzen
 ZCGewinn = 0;
 ZSGewinn = 0;
 document.getElementById("SGewinnSpiele").innerHTML = ZSGewinn;
@@ -3553,7 +3555,7 @@ document.getElementById("CGewinnSpiele").innerHTML = ZCGewinn;
 function ToggleFullscreen(element) {
 //   const elem = document.documentElement;
   if (!document.fullscreenElement) {
-    // Vollbild für die gesamte Seite aktivieren
+    // Vollbild fÃ¼r die gesamte Seite aktivieren
     document.documentElement.requestFullscreen();
     document.body.style.zoom = "110%";   
   } else {
@@ -3575,7 +3577,7 @@ function TimeOut5s() {
 }
 
 //   --- Nur Firefox, Chrome etc. Asynchrone Funktion WAIT nicht direkt aufrufen; 
-//       läuft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstützt
+//       lÃ¤uft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstÃ¼tzt
 async function wait(ms) {
 //
    return new Promise(resolve => {
