@@ -3571,24 +3571,34 @@ function ToggleFullscreen(element) {
     document.exitFullscreen();
   }
 }
+/* if (window.document.documentMode) {
+  
+  // Do IE stuff ... falls man das mal braucht
+}
+
+//   --- Nur Firefox, Chrome etc. Asynchrone Funktion WAIT nicht direkt aufrufen; 
+//       läuft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstützt
+async function wait(ms) {
+//
+   return new Promise(resolve => {
+      setTimeout(resolve, ms);
+   }
+   );
+//   
+}
+
 //  ---------------------------------------
 //  --- ASynchrone Funktion STOPBLINK; ruft WAIT auf
 async function stopblink(CPos) {
-   var CPos;    
+//
+   var CPos; 
+   
    await wait(3000);
    clearInterval(t);
    document.getElementById(CPos).style.visibility = "visible";
 //   
 }
-    
-//   --- Nur Firefox, Chrome etc. Asynchrone Funktion WAIT nicht direkt aufrufen; 
-//       läuft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstützt
-async function wait(ms) {
-   return new Promise(resolve => {
-   setTimeout(resolve, ms);
-   }
-   ); 
-}
+
 //  ---------------------------------------
 */
 </script>
