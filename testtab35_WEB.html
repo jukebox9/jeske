@@ -3347,10 +3347,10 @@ function CoverAuswahl()
     // Alle anderen Browser CoverAuswahl via WEB (Github - MUSS) - dann muss aber das Spiel auch via Link auf dem Host gestartet werden 
     // sonst passiert einfach nichts
     if (urlheader=="https:") {
-       var CoverFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_CoverAuswahl.html",
+       alert("Vor Auswahl"); 
+      var CoverFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_CoverAuswahl.html",
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
-       // Hilfe immer in den Vordergrund
-       alert("vor Auswahl"); 
+       // Hilfe immer in den Vordergrund      
        CoverFenster.focus();
        alert("Nach Auswahl"); 
        location.reload(forcedReload);    
