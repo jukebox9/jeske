@@ -3350,10 +3350,9 @@ function CoverAuswahl()
        var CoverFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_CoverAuswahl.html",
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Hilfe immer in den Vordergrund
+       alert("OK"); 
        CoverFenster.focus();
-      setTimeout(function() {
-       location.reload();
-   }, 100);      
+       location.reload(forcedReload);    
        return;        
        }
 }
