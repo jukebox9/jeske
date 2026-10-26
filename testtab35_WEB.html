@@ -3355,10 +3355,14 @@ function CoverAuswahl()
        // Hilfe immer in den Vordergrund      
        CoverFenster.focus();
        alert("Nach Auswahl");      
-       document.getElementById('reloadButton').addEventListener('click', function() {
-       reloadButton.click();
-       location.reload();
-       });
+       const btn = document.getElementById("reloadButton");  
+       btn.addEventListener("click", () => {
+           window.location.reload();
+        }); 
+       // Nach 3 Sekunden (3000ms) den Klick automatisch auslösen
+       setTimeout(() => {
+       btn.click(); 
+       }, 3000);
        return;        
        }
 }
