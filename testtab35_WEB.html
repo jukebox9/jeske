@@ -276,7 +276,7 @@ font-size:10pt; /* Größe 10pt */
     </tr>
     <tr>
       <td style="background-color: white; color: rgb(0, 0, 153); text-align: center;"><a href="javascript:JokerZieh(01)">SetzAus</a></td>
-      <td style="background-color: white; color: rgb(0, 0, 153); text-align: center;"><a href="javascript:CoverAuswahl(01);TimeOut5s(01)">Cover</a></td>
+      <td style="background-color: white; color: rgb(0, 0, 153); text-align: center;"><a href="javascript:CoverAuswahl(01)">Cover</a></td>
     </tr>
   </tbody>
 </table>
@@ -3336,13 +3336,13 @@ function CoverAuswahl()
     i = agent.indexOf("FIREFOX",1);
     if(i!=(-1)) { 
        // nur für den lokalen Testbetrieb (localhost) mit FIREFOX gedacht
-       if (urlheader=="file:") {
+       if (urlheader=="file:") {        
           var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
           // Hilfe immer in den Vordergrund
-          CoverFenster.focus();         
+          CoverFenster.focus();             
           return
        }
-    }           
+    }              
     
     // Alle anderen Browser CoverAuswahl via WEB (Github - MUSS) - dann muss aber das Spiel auch via Link auf dem Host gestartet werden 
     // sonst passiert einfach nichts
@@ -3351,7 +3351,7 @@ function CoverAuswahl()
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Hilfe immer in den Vordergrund
        CoverFenster.focus();
-       location.reload();
+       location.reload(forcedReload);
        return;        
        }
 }
