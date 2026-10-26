@@ -325,6 +325,8 @@ font-size:10pt; /* Größe 10pt */
 <!-- -->
 <br>  
 
+<button id="reloadButton">Seite neu laden</button> 
+  
 <!--Einfügung aktivieren für gefälligere ALERT Boxen (Alternative) - funktioniert auf Anhieb 
 <!--URL: alertbox.js.org
 <!-- --> <script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
@@ -3352,8 +3354,10 @@ function CoverAuswahl()
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Hilfe immer in den Vordergrund      
        CoverFenster.focus();
-       alert("Nach Auswahl"); 
-       window.location.replace = "https://github.com/jukebox9/jeske/blob/master/testtab35_WEB.html";          
+       alert("Nach Auswahl");      
+       document.getElementById('reloadButton').addEventListener('click', function() {
+       location.reload();
+       });
        return;        
        }
 }
