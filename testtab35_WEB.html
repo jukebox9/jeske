@@ -71,8 +71,7 @@
 <!--           zurück aus Fullscreen mit gleichem Button; alle Browser bieten auch ESC-Taste an (ungünstig fürs Tablet ohne Tastatur)
 <!--           Browser werden in der Fallunterscheidung nicht erkannt, ist aber auch nicht notwendig
 <!--           Screen wird auf 110% Zoom skaliert, geht bis auf EDGE (sieht aber gut aus)
-<!--           weitere Anpassung: Funktion COVER um TimeOut ergänzt (auf Button !!); nach 5 Sekunden Spielneustart mit gewähltem Cover-Satz
-<!--           innerhalb der Funktion selbst gehts nicht
+<!--           weitere Anpassung: Funktion COVER um Timer ergänzt (auf Blind-Button !); nach 5 Sekunden Spielneustart mit gewähltem Cover-Satz
 <!--           keine Wahl getroffen ? Neustart mit den bisherigen Covern
 <!-- -->
 h1 {
@@ -3353,13 +3352,13 @@ function CoverAuswahl()
     if (urlheader=="https:") {       
       var CoverFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_CoverAuswahl.html",
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
-       // Hilfe immer in den Vordergrund      
+       // Cover-Auswahl immer in den Vordergrund. Achtung : Script läuft weiter und wartet nicht      
        CoverFenster.focus();               
        const btn = document.getElementById("reloadButton");  
        btn.addEventListener("click", () => {
            window.location.reload();
         }); 
-       // Nach 5 Sekunden (5000ms) den Klick automatisch auslösen
+       // Nach 5 Sekunden (5000ms) den Klick automatisch auslösen - Bildschirmaufbau mit gewähltem Cover 
        setTimeout(() => {
        btn.click(); 
        }, 5000);
@@ -3560,7 +3559,7 @@ document.getElementById("SGewinnSpiele").innerHTML = ZSGewinn;
 document.getElementById("CGewinnSpiele").innerHTML = ZCGewinn;
 }
 
-// 1. Vollbildmodus aktivieren
+//  Vollbildmodus aktivieren ein/aus
 function ToggleFullscreen(element) {
 //   const elem = document.documentElement;
   if (!document.fullscreenElement) {
@@ -3572,42 +3571,24 @@ function ToggleFullscreen(element) {
     document.exitFullscreen();
   }
 }
-
-// Nach Coverwechsel 5 Sekunden Timeout, dann automatisch neues Spiel mit neuen Covern
-function TimeOut5s() {
-    setTimeout(() => {
-      location.reload();
-},5000);
-}
-          
-/* if (window.document.documentMode) {
-  
-  // Do IE stuff ... falls man das mal braucht
-}
-
-//   --- Nur Firefox, Chrome etc. Asynchrone Funktion WAIT nicht direkt aufrufen; 
-//       läuft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstützt
-async function wait(ms) {
-//
-   return new Promise(resolve => {
-      setTimeout(resolve, ms);
-   }
-   );
-//   
-}
-
 //  ---------------------------------------
 //  --- ASynchrone Funktion STOPBLINK; ruft WAIT auf
 async function stopblink(CPos) {
-//
-   var CPos; 
-   
+   var CPos;    
    await wait(3000);
    clearInterval(t);
    document.getElementById(CPos).style.visibility = "visible";
 //   
 }
-
+    
+//   --- Nur Firefox, Chrome etc. Asynchrone Funktion WAIT nicht direkt aufrufen; 
+//       läuft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstützt
+async function wait(ms) {
+   return new Promise(resolve => {
+   setTimeout(resolve, ms);
+   }
+   ); 
+}
 //  ---------------------------------------
 */
 </script>
