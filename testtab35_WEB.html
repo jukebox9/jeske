@@ -331,7 +331,8 @@ font-size:10pt; /* Größe 10pt */
 <!--Einfügung aktivieren für gefälligere ALERT Boxen (Alternative) - funktioniert auf Anhieb 
 <!--URL: alertbox.js.org
 <!-- --> <script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
-
+  
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
 i=0; // Laufvariablen-Definition
@@ -350,10 +351,8 @@ z=0;
 //  border: true
 //});
 
-> [!NOTE]
-> Spielbeginn.
-  
 //alert("...");
+Swal.fire("SweetAlert2 is working!"); 
 "use strict"; // Javascript Norm-Code
  
 // da Anzeigedarstellung des Browsers unbekannt ist (zB ZOOM-Faktor) immer nach Start ans Ende = zum Spielfeld springen 
@@ -675,10 +674,7 @@ if (z == 0) {
    runde = runde + 1;
    computer();
    zug = false;
-   //alert("Computer hat begonnen");  
-  > [!NOTE]
-  > Computer hat begonnen.
-    
+   //alert("Computer hat begonnen");       
 }
 
 //  ---------------------------------------
@@ -3095,6 +3091,7 @@ function JokerZieh()
    for (var i=1; i<=10; i++) {
         if ((TCVG[i] == "§§") || (TCVG[i] == "SP")) {
             alert("Aussetzen nicht möglich ! noch Joker auf der Hand");
+            Swal.fire("SweetAlert2 noch Joker auf der Hand ");
             return;
         }    
    }
