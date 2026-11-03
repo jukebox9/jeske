@@ -330,9 +330,9 @@ font-size:10pt; /* Größe 10pt */
   
 <!--Einfügung aktivieren für gefälligere ALERT Boxen (Alternative) - funktioniert auf Anhieb 
 <!--URL: alertbox.js.org
-<!-- --> <script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
-  
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--<script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
+<!-- -->
+
 <script>
 
 i=0; // Laufvariablen-Definition
@@ -352,7 +352,6 @@ z=0;
 //});
 
 //alert("...");
-Swal.fire("SweetAlert2 is working!"); 
 "use strict"; // Javascript Norm-Code
  
 // da Anzeigedarstellung des Browsers unbekannt ist (zB ZOOM-Faktor) immer nach Start ans Ende = zum Spielfeld springen 
@@ -674,7 +673,7 @@ if (z == 0) {
    runde = runde + 1;
    computer();
    zug = false;
-   //alert("Computer hat begonnen");       
+   alert("Computer hat begonnen");  
 }
 
 //  ---------------------------------------
@@ -3090,8 +3089,7 @@ function JokerZieh()
    // Prüfung vorab: Aussetzen nur zulässig wenn kein Joker auf der Hand
    for (var i=1; i<=10; i++) {
         if ((TCVG[i] == "§§") || (TCVG[i] == "SP")) {
-            // alert("Aussetzen nicht möglich ! noch Joker auf der Hand");
-            Swal.fire("SweetAlert2 noch Joker auf der Hand ");
+            alert("Aussetzen nicht möglich ! noch Joker auf der Hand");
             return;
         }    
    }
@@ -3336,7 +3334,7 @@ function CoverAuswahl()
        location.reload();
        return;
    }      
-   
+    // nur Firefox lokal von der C-Platte
     var i;
     var agent = navigator.userAgent.toUpperCase();
     i = agent.indexOf("FIREFOX",1);
@@ -3344,9 +3342,17 @@ function CoverAuswahl()
        // nur für den lokalen Testbetrieb (localhost) mit FIREFOX gedacht
        if (urlheader=="file:") {        
           var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
-          // Hilfe immer in den Vordergrund
-          CoverFenster.focus();             
-          return
+          // Cover-Auswahl immer in den Vordergrund
+          CoverFenster.focus();  
+          const btn = document.getElementById("reloadButton");         
+          btn.addEventListener("click", () => {
+             window.location.reload();
+          }); 
+         // Nach 5 Sekunden (5000ms) den Klick automatisch auslösen - Bildschirmaufbau mit gewähltem Cover 
+         setTimeout(() => {
+         btn.click(); 
+         }, 5000);                        
+           return
        }
     }              
     
@@ -3357,14 +3363,14 @@ function CoverAuswahl()
        "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
        // Cover-Auswahl immer in den Vordergrund. Achtung : Script läuft weiter und wartet nicht      
        CoverFenster.focus();               
-       const btn = document.getElementById("reloadButton");  
+       const btn = document.getElementById("reloadButton");        
        btn.addEventListener("click", () => {
            window.location.reload();
         }); 
        // Nach 5 Sekunden (5000ms) den Klick automatisch auslösen - Bildschirmaufbau mit gewähltem Cover 
        setTimeout(() => {
        btn.click(); 
-       }, 5000);
+       }, 5000);      
        return;        
        }
 }
