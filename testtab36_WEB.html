@@ -9,7 +9,7 @@
   
   <meta content="Jukebox Spiel" name="description">
   
-  
+   
   <style>
 
 <!-- Vs. 0.13: 4.2.2019 sauberes Spielfeld; Spieler zieht OK, Überschriften OK für alle Browser ; noch keine
@@ -73,7 +73,8 @@
 <!--           Screen wird auf 110% Zoom skaliert, geht bis auf EDGE (sieht aber gut aus)
 <!--           weitere Anpassung: Funktion COVER um Timer ergänzt (auf Blind-Button !); nach 5 Sekunden Spielneustart mit gewähltem Cover-Satz
 <!--           keine Wahl getroffen ? Neustart mit den bisherigen Covern
-<!-- Vs. 1.70  Nachrichten: Umgestellt von Javascript ALERT auf ALERTBOX Popup .. wg Fullscreen-Modus Support
+<!--  Vs 1.70  ohne PopUp Hilfssoftware
+<!--           Vs ..35_WEB.xxy mit Fullscreen, Firefox Test auch lokal, Testfall doppelt Aussetzen: ALERT wird unterdr�ckt, App h�ngt
 <!-- -->
 h1 {
 color:#FF9F00; /* Farbe orange */
@@ -83,8 +84,31 @@ font-family:arial, "lucida console", sans-serif; /* Schriftart */
 h2 {
 font-size:10pt; /* Größe 10pt */
 }
+<!--           CSS Befehle: Einf�rben der Box f�r Programm-Meldungen
+<!-- -->  
+dialog {
+  border: none;
+  /* Border Radius wirkt nicht ... keine runden Ecken, h�ngt mit dialog:modal zusammen   */
+  border-radius: 10px 25% 20px;
+  padding: 20px;
+  box-shadow: 0 4.6px 19.6px rgba(60, 179, 113, 0.25);
+  overflow: hidden; 
+}
+
+/* Wenn das Dialog als Modal mit .showModal() ge�ffnet wurde dann farbig- also hier im Programm  */
+dialog:modal {
+  background-color: rgb(255, 99, 71);
+  border-color: #e7c157;
+}
+  
+/* Hintergrund des PopUp Fensters */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5); /* Spielhintergrund bleibt schwarz */
+}
+ 
   </style>
-</head><body style="color: yellow; background-color: black;" alink="#000099" link="#000099" vlink="#990099">
+  
+</head><body style="color: yellow; background-color: black;" alink="#000099" link="#000099" vlink="#990099"> 
 <section>
 <a name="top">&nbsp;</a>
 </section>
@@ -282,7 +306,7 @@ font-size:10pt; /* Größe 10pt */
 </table>
 </div>
 
-<!-- Test: 2 Spielfeldzähler einfuegen
+<!-- Test: 2 Spielfeldzaehler einfuegen
 <!-- -->
 <div style="float: right; width: 20%;">
 <table style="width: 75px; text-align: left; margin-left: auto; margin-right: 0px;" border="5" cellpadding="0" cellspacing="3">
@@ -302,7 +326,7 @@ font-size:10pt; /* Größe 10pt */
   </tbody>
 </table>
 </div>
-<!-- Test: 2 Spielfeldzähler einfuegen -Ende-
+<!-- Test: 2 Spielfeldzaehler einfuegen -Ende-
 
 <!-- Test: 3 Browser Fullscreen an/aus Button einfügen
 <!-- -->
@@ -321,18 +345,21 @@ font-size:10pt; /* Größe 10pt */
   </tbody>
 </table>
 </div>
-<!-- Test: 3 Browser Fullscreen  -Ende-
+<!-- Test: 3 Browser Fullscreen  -Ende- 
 <!-- -->
 <br>  
 
 <!-- einen unsichtbaren Button einfügen der durch ein Click Event in der Fkt COVER laden ausgelöst wird
 <!-- -->  
 <button id="reloadButton" style="display: none";>Seite neu laden nach coverwechsel</button> 
-  
-<!--Einfügung aktivieren für gefälligere ALERT Boxen (Alternative) - funktioniert auf Anhieb 
-<!--URL: alertbox.js.org
-<!-- --> 
-<script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
+
+<dialog id="meinModal">
+  <p id="modalText">Hier steht die Nachricht...</p>
+  <button onclick="document.getElementById('meinModal').close()">OK</button>
+</dialog>
+
+<!--  <button id="openBtn">*</button>  vermtl. �berfl�ssig
+<!-- -->
 
 <script>
 
@@ -340,18 +367,7 @@ i=0; // Laufvariablen-Definition
 j=0;
 k=0;
 z=0; 
-
-// Beispiel ...
-  alertbox.render({ 
-  alertIcon: 'info',  
-  message: 'Spielbeginn ...',
-  btnTitle: 'Ok',
-  themeColor: '#000000',
-  btnColor: '#7CFC00',
-  border: true
-});
-
-//alert("...");
+ 
 "use strict"; // Javascript Norm-Code
  
 // da Anzeigedarstellung des Browsers unbekannt ist (zB ZOOM-Faktor) immer nach Start ans Ende = zum Spielfeld springen 
@@ -360,7 +376,7 @@ function Seitenende() {
   document.getElementById("lev").scrollIntoView(true);
 }
 window.onload=function(){
-Seitenende();
+Seitenende(); 
 }
 
 p = 0; // von Variable beim Zug des Spielers (aus Handvorrat)
@@ -395,7 +411,6 @@ zPrefYC = 0; // in Anlageoptimierung für Computer: Diagonalen auswerten ob Gewi
 zPrefGC = 0; // in Anlageoptimierung für Computer: Diagonalen auswerten ob Verlustposition Diagonale Cover
 ZSGewinn = 0; // Zähler für Gewinnspiele, Spieler
 ZCGewinn = 0; // Zähler für Gewinnspiele, Computer
-
 
 
 var CPos = 0;  // für Blinken an/aus .. die Position des letzten Cpmputer Covers (1-25)
@@ -673,15 +688,8 @@ if (z == 0) {
    runde = runde + 1;
    computer();
    zug = false;
-   // Beispiel ...
-   alertbox.render({
-   alertIcon: 'info',  
-   message: 'Computer hat begonnen ..',
-   btnTitle: 'Ok',
-   themeColor: '#000000',
-   btnColor: '#7CFC00',
-   border: true
-});    
+   //alert("Computer hat begonnen"); 
+   showAlert('Computer hat begonnen');      
 }
 
 //  ---------------------------------------
@@ -695,6 +703,7 @@ displayTCVY(SOffenZu);
 
 
 // ##################### Spielbeginn #################################
+
 
 //  JUKEBOX: zentrale Spielsteuerung; Aufruf durch Mausklick oder Touch
 function gamecontrol(y)
@@ -741,44 +750,20 @@ function gamecontrol(y)
          if (SiegG > SiegY) {
             ZSGewinn = ZSGewinn + 1;
             document.getElementById("SGewinnSpiele").innerHTML = ZSGewinn;
-            // alert("Gewonnen mit " + SiegG + " : " + SiegY);
-            // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Gewonnen ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-  border: true
-});
+            //alert("Gewonnen mit " + SiegG + " : " + SiegY);
+            showAlert('Gewonnen');
          }
          ;
          if (SiegG < SiegY) {
              ZCGewinn = ZCGewinn + 1;
              document.getElementById("CGewinnSpiele").innerHTML = ZCGewinn;
-             // alert("Verloren mit " + SiegG + " : " + SiegY);
-             // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Verloren ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+             //alert("Verloren mit " + SiegG + " : " + SiegY);
+             showAlert('Verloren');
          }
          ;
          if (SiegG == SiegY) {
-            // alert("Unentschieden " + SiegG + " : " + SiegY)
-            // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Unentschieden ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+            //alert("Unentschieden " + SiegG + " : " + SiegY)
+            showAlert('Unentschieden');
          }
          ;
          // Var. b aus Cookie-Lesen zu Programmbeginn
@@ -1033,16 +1018,8 @@ function computer()
    if (SCover45Y_trigger) {         
       if ((runde >= 9) && ((SiegG-SiegY) > 4)) {
          SCover45Y_trigger = false;
-         // alert("Computer spielt STARS-on-45");
-         // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Computer spielt STARS-on-45',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+         //alert("Computer spielt STARS-on-45");
+         showAlert('computer spielt STARS-on-45');
          // Spielmodus LEVEL: wenn Computer STARS45 gespielt Counterfeld wieder zurücksetzen
          document.getElementById("CCounter").style.backgroundColor = "black";
          zufallszahl_rc(); // ermitteln einer beliebigen Pos.: Row/Col 
@@ -1064,15 +1041,7 @@ function computer()
        if ((runde >= 10) && ((SiegG-SiegY) > 1)) {
          SCover45Y_trigger = false;
          //alert("Computer spielt STARS-on-45");
-         // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Computer spielt STARS-on-45',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+         showAlert('computer spielt STARS-on-45');
          // Spielmodus LEVEL: wenn Computer STARS45 gespielt Counterfeld wieder zurücksetzen
          document.getElementById("CCounter").style.backgroundColor = "black";
          zufallszahl_rc(); // ermitteln einer beliebigen Pos.: Row/Col 
@@ -1974,16 +1943,8 @@ function TCSR_Nachziehen(callby)
 
    var callby;
    if (callby == "C") {
-      // alert("Computer setzt aus");
-      // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Computer setzt aus ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+      //alert("Computer setzt aus");
+      showAlert('Computer setzt aus');
    }
 
    for (var i=1; i<=10; i++) {
@@ -3148,19 +3109,10 @@ function OffenZu()
 //  Button: Aussetzen - Spieler zieht Joker nach 
 function JokerZieh()
 {
-   // Prüfung vorab: Aussetzen nur zulässig wenn kein Joker auf der Hand
+   // Pruefung vorab: Aussetzen nur zulässig wenn kein Joker auf der Hand
    for (var i=1; i<=10; i++) {
         if ((TCVG[i] == "§§") || (TCVG[i] == "SP")) {
-            // alert("Aussetzen nicht möglich ! noch Joker auf der Hand");
-            // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Aussetzen nicht m�glich; noch Joker auf der Hand ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+            showAlert('Kein Aussetzen moeglich ! noch Joker auf der Hand');
             return;
         }    
    }
@@ -3221,44 +3173,20 @@ function computerzugplus()
       if (SiegG > SiegY) {
           ZSGewinn = ZSGewinn + 1;
           document.getElementById("SGewinnSpiele").innerHTML = ZSGewinn;
-          // alert("Gewonnen mit " + SiegG + " : " + SiegY)
-          // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Gewonnen ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+          //alert("Gewonnen mit " + SiegG + " : " + SiegY)
+          showAlert('Gewonnen');
       }
       ;
       if (SiegG < SiegY) {
          ZCGewinn = ZCGewinn + 1;
          document.getElementById("CGewinnSpiele").innerHTML = ZCGewinn;
-         // alert("Verloren mit " + SiegG + " : " + SiegY)
-         // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Verloren',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+         //alert("Verloren mit " + SiegG + " : " + SiegY)
+         showAlert('Verloren');
       }
       ;
       if (SiegG == SiegY) {
          //alert("Unentschieden " + SiegG + " : " + SiegY)
-         // Beispiel ...
-            alertbox.render({ 
-            alertIcon: 'info',  
-            message: 'Unentschieden ...',
-            btnTitle: 'Ok',
-            themeColor: '#000000',
-            btnColor: '#7CFC00',
-            border: true
-          });
+         showAlert('Unentschieden');
       }
       ;
       // Var. b aus Cookie-Lesen zzu Programmbeginn
@@ -3381,7 +3309,7 @@ function OnlineHilfe()
    browserIsIE = navigator.userAgent.toUpperCase().indexOf("TRIDENT/") != -1 
    if (browserIsIE) {
        var HilfeFenster = window.open("JUKEBOX_Hilfe.html", "Zweitfenster", "  width=1100,height=400,left=100,top=200,resizable=yes,scrollbars=yes");
-      // Hilfe immer in den Vordergrund
+      // Hilfe immer in den Vordergrund      
       HilfeFenster.focus();
       return;
    }
@@ -3390,16 +3318,15 @@ function OnlineHilfe()
    browserIsIE = navigator.userAgent.toUpperCase().indexOf("MSIE") != -1;
    if (browserIsIE) {
        var HilfeFenster = window.open("JUKEBOX_Hilfe.html", "Zweitfenster", "  width=1100,height=400,left=100,top=200,resizable=yes,scrollbars=yes");
-       // Hilfe immer in den Vordergrund
+       // Hilfe immer in den Vordergrund     
        HilfeFenster.focus();
        return;
    }
    
    //alle anderen Browser Hilfe via WEB (Github)
-   var HilfeFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_Hilfe.html", "Zweitfenster", "width=1100,height=400,left=100,top=200,resizable=yes,scrollbars=yes");    
-   // Hilfe immer in den Vordergrund
-   HilfeFenster.focus();        
-   
+   var HilfeFenster = window.open("https://htmlpreview.github.io/?https://github.com/jukebox9/jeske/blob/master/JUKEBOX_Hilfe.html", "Zweitfenster", "width=1100,  height=400,left=100,top=200,resizable=yes,scrollbars=yes");    
+   // Hilfe immer in den Vordergrund 
+   HilfeFenster.focus();
 }
 //  Button: Spieler kann zwischen verschiedenen COVER-Sätzen wählen
 function CoverAuswahl()
@@ -3441,7 +3368,15 @@ function CoverAuswahl()
        if (urlheader=="file:") {        
           var CoverFenster = window.open("JUKEBOX_CoverAuswahl.html", "Zweitfenster", "width=500,height=600,left=100,top=200,resizable=yes,scrollbars=yes");    
           // Hilfe immer in den Vordergrund
-          CoverFenster.focus();             
+          CoverFenster.focus(); 
+          const btn = document.getElementById("reloadButton");  
+          btn.addEventListener("click", () => {
+           window.location.reload();
+        }); 
+       // Nach 5 Sekunden (5000ms) den Klick automatisch auslösen - Bildschirmaufbau mit gewähltem Cover 
+       setTimeout(() => {
+       btn.click(); 
+       }, 5000);            
           return
        }
     }              
@@ -3481,17 +3416,6 @@ function startblink(CPos) {
       ele.style.visibility = (ele.style.visibility == 'hidden' ? '' : 'hidden');
    }
    , blink_speed);
-   
-   // Beispiel ...
-  alertbox.render({
-  alertIcon: 'question',
-  title: 'Thank You!',
-  message: 'AlertBox jetzt wird geblinkt ...',
-  btnTitle: 'Ok',
-  themeColor: '#000000',
-  btnColor: '#7CFC00',
-  border: true
-});
    
    // stopblink als  ASsync Funktion hier aktivieren 
    // ansonsten hält der INTERPRETER das Javascipt an; es blinkt erst garnicht
@@ -3672,44 +3596,26 @@ document.getElementById("CGewinnSpiele").innerHTML = ZCGewinn;
 //  Vollbildmodus aktivieren ein/aus
 function ToggleFullscreen(element) {
 //   const elem = document.documentElement;
+  
   if (!document.fullscreenElement) {
     // Vollbild für die gesamte Seite aktivieren
     document.documentElement.requestFullscreen();
     document.body.style.zoom = "110%";   
   } else {
     // Vollbild verlassen
-    document.exitFullscreen();
+    document.exitFullscreen(); 
   }
 }
-/* if (window.document.documentMode) {
+
+function showAlert(nachricht) {
+  const dialog = document.getElementById('meinModal');
+  const textElement = document.getElementById('modalText');
   
-  // Do IE stuff ... falls man das mal braucht
+  textElement.textContent = nachricht;
+  dialog.showModal(); // �ffnet das Fenster modal (blockiert den Hintergrund)
 }
 
-//   --- Nur Firefox, Chrome etc. Asynchrone Funktion WAIT nicht direkt aufrufen; 
-//       läuft parallel zum weiteren Spiel ab. Wird vom INTERNET EXPLORER nicht unterstützt
-async function wait(ms) {
-//
-   return new Promise(resolve => {
-      setTimeout(resolve, ms);
-   }
-   );
-//   
-}
 
-//  ---------------------------------------
-//  --- ASynchrone Funktion STOPBLINK; ruft WAIT auf
-async function stopblink(CPos) {
-//
-   var CPos; 
-   
-   await wait(3000);
-   clearInterval(t);
-   document.getElementById(CPos).style.visibility = "visible";
-//   
-}
-
-//  ---------------------------------------
-*/
 </script>
-</body></html>
+</body>
+</html>
